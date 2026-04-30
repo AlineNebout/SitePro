@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import ScrollReveal from "@/components/animation/ScrollReveal";
 import TiltCard from "@/components/animation/TiltCard";
-import NewsletterForm from "@/components/forms/NewsletterForm";
 
 const universes = [
   {
@@ -485,27 +484,6 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Newsletter CTA */}
-          <ScrollReveal>
-            <div className="bg-gradient-to-r from-accent/10 via-primary/5 to-accent/10 rounded-2xl p-8 sm:p-10 max-w-2xl mx-auto border border-accent/15 mb-14">
-              <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                  </svg>
-                </div>
-                <h3 className="font-heading text-xl sm:text-2xl text-text-dark mb-2">
-                  Restez informé(e)
-                </h3>
-                <p className="text-text-muted text-sm max-w-md mx-auto">
-                  Recevez mes conseils en ostéopathie, réflexes archaïques et coaching foulée. Un email par mois, pas de spam.
-                </p>
-              </div>
-              <div className="max-w-sm mx-auto">
-                <NewsletterForm variant="footer" />
-              </div>
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 
