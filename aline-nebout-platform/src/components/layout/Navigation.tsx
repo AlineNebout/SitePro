@@ -110,6 +110,14 @@ export default function Navigation() {
               Prendre RDV
             </Link>
           </li>
+          <li>
+            <Link
+              href="/connexion"
+              className="border-2 border-primary/30 text-primary px-4 py-2 rounded-xl hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none text-sm font-medium"
+            >
+              Se connecter
+            </Link>
+          </li>
         </ul>
       </nav>
 
@@ -159,7 +167,12 @@ export default function Navigation() {
           >
             Prendre RDV
           </Link>
-        </div>
+          <Link
+            href="/connexion"
+            className="border-2 border-primary/30 text-primary px-6 py-3 rounded-xl hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer"
+          >
+            Se connecter
+          </Link>
       )}
     </>
   );
