@@ -127,7 +127,7 @@
 
 ## Phase 6: Authentication & Coaching Dashboard
 
-- [x] 15. Implement authentication system
+- [-] 15. Implement authentication system
   - [ ] 15.1 Create `app/(auth)/connexion/page.tsx` (login form)
   - [ ] 15.2 Create `app/(auth)/inscription/page.tsx` (registration form)
   - [ ] 15.3 Create `app/(auth)/mot-de-passe-oublie/page.tsx` (password reset)
