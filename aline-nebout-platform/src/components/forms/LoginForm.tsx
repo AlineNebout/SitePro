@@ -12,6 +12,8 @@ export default function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+  const redirectTo = searchParams?.get("redirect") || null;
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -48,14 +50,14 @@ export default function LoginForm() {
           .single();
 
         if (profile?.role === "admin") {
-          router.push("/admin");
+          router.push(redirectTo || "/admin");
           router.refresh();
           return;
         }
       }
 
-      // Regular user — go to dashboard
-      router.push("/tableau-de-bord");
+      // Regular user — go to redirect target or dashboard
+      router.push(redirectTo || "/tableau-de-bord");
       router.refresh();
     } catch {
       setError("Une erreur est survenue. Veuillez réessayer.");
