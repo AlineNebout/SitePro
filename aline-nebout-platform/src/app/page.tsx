@@ -250,6 +250,47 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Aline's mojo */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <ScrollReveal>
+            <div className="bg-gradient-to-br from-primary/5 via-white/90 to-accent/5 rounded-3xl p-8 sm:p-12 border border-primary/10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" aria-hidden="true" />
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent/5 rounded-full blur-3xl" aria-hidden="true" />
+              <div className="relative z-10">
+                <p className="text-primary font-semibold text-sm uppercase tracking-wider mb-4">Ce qui m&apos;anime</p>
+                <h3 className="font-heading text-2xl sm:text-3xl text-text-dark mb-6">
+                  Installée depuis 13 ans à Rochetaillée
+                </h3>
+                <div className="space-y-4 text-text-muted leading-relaxed">
+                  <p>
+                    Ce qui me fait vibrer, c&apos;est le lien. Le lien avec mes patients, avec ce quartier que j&apos;aime, avec cette communauté de santé que nous construisons ensemble au Pôle Santé. Depuis 13 ans, je vis et travaille ici, au bord de la Saône, au pied des Monts d&apos;Or.
+                  </p>
+                  <p>
+                    Mon métier, c&apos;est avant tout <strong className="text-text-dark">sentir les énergies</strong>. Sous mes mains, je perçois les tensions, les blocages, les émotions qui s&apos;enkystent. Chaque patient est unique, chaque corps raconte une histoire. Mon rôle, c&apos;est d&apos;écouter cette histoire et d&apos;aider le corps à retrouver son harmonie.
+                  </p>
+                  <p>
+                    Ce qui me fait rêver ? Que chacun puisse <strong className="text-text-dark">vivre en harmonie</strong> — avec son corps, avec ses émotions, avec son environnement. Que les enfants puissent apprendre sans lutter contre leur propre corps. Que les sportifs puissent courir sans douleur. Que les mamans puissent vivre leur grossesse sereinement.
+                  </p>
+                  <p>
+                    <strong className="text-text-dark">Aider les autres</strong>, c&apos;est ce qui donne du sens à chacune de mes journées. Et quand je ne suis pas au cabinet, vous me trouverez sur les sentiers — en trail ou en triathlon — parce que le mouvement, c&apos;est la vie.
+                  </p>
+                </div>
+                <div className="mt-8 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20">
+                    <img src="/images/portrait.jpg" alt="Aline Nebout" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <p className="font-heading text-sm text-text-dark">Aline Nebout</p>
+                    <p className="text-xs text-text-muted">Ostéopathe D.O. depuis 2010 — Rochetaillée-sur-Saône</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* Testimonials from Google */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50">
         <div className="max-w-6xl mx-auto">
@@ -462,45 +503,6 @@ export default function HomePage() {
               </div>
               <div className="max-w-sm mx-auto">
                 <NewsletterForm variant="footer" />
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Aline's mojo */}
-          <ScrollReveal>
-            <div className="bg-gradient-to-br from-primary/5 via-white/90 to-accent/5 rounded-3xl p-8 sm:p-12 max-w-4xl mx-auto border border-primary/10 relative overflow-hidden">
-              {/* Decorative glow */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" aria-hidden="true" />
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent/5 rounded-full blur-3xl" aria-hidden="true" />
-
-              <div className="relative z-10">
-                <p className="text-primary font-semibold text-sm uppercase tracking-wider mb-4">Ce qui m&apos;anime</p>
-                <h3 className="font-heading text-2xl sm:text-3xl text-text-dark mb-6">
-                  Installée depuis 13 ans à Rochetaillée
-                </h3>
-                <div className="space-y-4 text-text-muted leading-relaxed">
-                  <p>
-                    Ce qui me fait vibrer, c&apos;est le lien. Le lien avec mes patients, avec ce quartier que j&apos;aime, avec cette communauté de santé que nous construisons ensemble au Pôle Santé. Depuis 13 ans, je vis et travaille ici, au bord de la Saône, au pied des Monts d&apos;Or.
-                  </p>
-                  <p>
-                    Mon métier, c&apos;est avant tout <strong className="text-text-dark">sentir les énergies</strong>. Sous mes mains, je perçois les tensions, les blocages, les émotions qui s&apos;enkystent. Chaque patient est unique, chaque corps raconte une histoire. Mon rôle, c&apos;est d&apos;écouter cette histoire et d&apos;aider le corps à retrouver son harmonie.
-                  </p>
-                  <p>
-                    Ce qui me fait rêver ? Que chacun puisse <strong className="text-text-dark">vivre en harmonie</strong> — avec son corps, avec ses émotions, avec son environnement. Que les enfants puissent apprendre sans lutter contre leur propre corps. Que les sportifs puissent courir sans douleur. Que les mamans puissent vivre leur grossesse sereinement.
-                  </p>
-                  <p>
-                    <strong className="text-text-dark">Aider les autres</strong>, c&apos;est ce qui donne du sens à chacune de mes journées. Et quand je ne suis pas au cabinet, vous me trouverez sur les sentiers — en trail ou en triathlon — parce que le mouvement, c&apos;est la vie.
-                  </p>
-                </div>
-                <div className="mt-8 flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20">
-                    <img src="/images/portrait.jpg" alt="Aline Nebout" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-heading text-sm text-text-dark">Aline Nebout</p>
-                    <p className="text-xs text-text-muted">Ostéopathe D.O. depuis 2010 — Rochetaillée-sur-Saône</p>
-                  </div>
-                </div>
               </div>
             </div>
           </ScrollReveal>
