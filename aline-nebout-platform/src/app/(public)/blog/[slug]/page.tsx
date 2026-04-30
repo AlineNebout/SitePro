@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import ScrollReveal from "@/components/animation/ScrollReveal";
+import ShareButtons from "@/components/content/ShareButtons";
 import DoctolibButton from "@/components/booking/DoctolibButton";
 
 interface ArticleData {
@@ -235,9 +236,17 @@ export default async function BlogArticlePage({
             </div>
 
             {/* Title */}
-            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-dark mb-8 leading-tight">
+            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-text-dark mb-6 leading-tight">
               {article.title}
             </h1>
+
+            {/* Share buttons */}
+            <div className="mb-8">
+              <ShareButtons
+                url={`https://aline-nebout.fr/blog/${article.slug}`}
+                title={article.title}
+              />
+            </div>
           </ScrollReveal>
 
           {/* Featured image */}
