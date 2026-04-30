@@ -158,13 +158,13 @@
 
 ## Phase 7: Pôle Santé — Directory & Community
 
-- [ ] 19. Build Practitioner directory
-  - [ ] 19.1 Create SQL migration for `practitioner_profiles` table
-  - [ ] 19.2 Create `app/(public)/pole-sante/page.tsx` (directory with profession filter)
-  - [ ] 19.3 Create `app/(public)/pole-sante/praticiens/[slug]/page.tsx` (practitioner profile)
-  - [ ] 19.4 Seed initial practitioner data (Marion, Charles, Clémentine, Tiffany, Sophie, Aline)
-  - [ ] 19.5 Build `PractitionerCard` component
-  - [ ] 19.6 Add breadcrumb (Home > Pôle Santé > [Practitioner])
+- [x] 19. Build Practitioner directory
+  - [x] 19.1 Create SQL migration for `practitioner_profiles` table
+  - [x] 19.2 Create `app/(public)/pole-sante/page.tsx` (directory with profession filter)
+  - [x] 19.3 Create `app/(public)/pole-sante/praticiens/[slug]/page.tsx` (practitioner profile)
+  - [x] 19.4 Seed initial practitioner data (Marion, Charles, Clémentine, Tiffany, Sophie, Aline)
+  - [x] 19.5 Build `PractitionerCard` component
+  - [x] 19.6 Add breadcrumb (Home > Pôle Santé > [Practitioner])
 
 - [ ] 20. Build Practitioner account management
   - [ ] 20.1 Create `app/(practitioner)/layout.tsx`

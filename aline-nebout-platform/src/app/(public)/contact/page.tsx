@@ -203,10 +203,11 @@ export default function ContactPage() {
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-sm h-full min-h-[400px]">
               <iframe
                 title="Localisation du cabinet d'Aline Nebout — Pôle Santé de Rochetaillée-sur-Saône"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=4.8406%2C45.8337%2C4.8506%2C45.8397&layer=mapnik&marker=45.8367%2C4.8456"
-                className="w-full h-full min-h-[400px] border-0"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2781.5!2d4.845!3d45.8367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f49456e369d261%3A0xb1fd3596e1d1f0ea!2sAline%20Nebout%20Ost%C3%A9opathe!5e0!3m2!1sfr!2sfr!4v1"
+                className="w-full h-full min-h-[400px] border-0 rounded-2xl"
                 loading="lazy"
-                referrerPolicy="no-referrer"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
               />
             </div>
           </ScrollReveal>
