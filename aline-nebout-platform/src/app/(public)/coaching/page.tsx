@@ -342,7 +342,7 @@ export default function CoachingPage() {
         </div>
       </section>
 
-      {/* Espace coaching teaser */}
+      {/* Espace coaching connecté */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50">
         <div className="max-w-4xl mx-auto">
           <ScrollReveal>
@@ -359,21 +359,31 @@ export default function CoachingPage() {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                    d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
                   />
                 </svg>
               </div>
               <h2 className="font-heading text-2xl sm:text-3xl text-text-dark mb-4">
-                Espace coaching connecté
+                Votre espace coaching personnel
               </h2>
-              <p className="text-text-muted max-w-lg mx-auto mb-4">
-                Bientôt disponible : un espace personnel pour retrouver vos analyses vidéo,
-                suivre vos progrès entre les ateliers et accéder à des exercices personnalisés.
+              <p className="text-text-muted max-w-lg mx-auto mb-6">
+                Suivez vos progrès, accédez à vos programmes d&apos;exercices personnalisés et consultez votre historique de séances.
               </p>
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 text-emerald-700 text-sm font-medium border border-emerald-200">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                Prochainement
-              </span>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <Link
+                  href="/connexion"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 shadow-lg shadow-emerald-600/20 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" /></svg>
+                  Se connecter
+                </Link>
+                <Link
+                  href="/inscription"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-emerald-500/30 text-emerald-700 font-semibold hover:bg-emerald-50 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none"
+                >
+                  Créer un compte
+                </Link>
+              </div>
             </div>
           </ScrollReveal>
         </div>
