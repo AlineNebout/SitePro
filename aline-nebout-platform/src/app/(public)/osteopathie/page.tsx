@@ -14,7 +14,7 @@ const specialties = [
     title: "Ostéopathie générale",
     description: "Douleurs de dos, maux de tête, troubles digestifs, séquelles de traumatismes. Une approche manuelle douce pour rétablir l'équilibre du corps.",
     href: "/osteopathie/generale",
-    imageUrl: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&h=600&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&h=600&fit=crop",
     icon: null,
   },
   {
@@ -42,14 +42,14 @@ const specialties = [
     title: "Cicatrices",
     description: "Traitement des adhérences de cicatrices pour améliorer leur élasticité et réduire les douleurs associées.",
     href: "/osteopathie/cicatrices",
-    imageUrl: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&h=600&fit=crop",
+    imageUrl: "/images/cicatrice-travail.jpg",
     icon: null,
   },
   {
     title: "Sportifs",
     description: "Prévention et traitement des blessures sportives. Conseils sur la foulée en course à pied.",
     href: "/osteopathie/sportifs",
-    imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+    imageUrl: "/images/sportifs.jpg",
     icon: null,
   },
 ];

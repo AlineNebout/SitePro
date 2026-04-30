@@ -23,9 +23,9 @@ const specialties: Record<string, SpecialtyData> = {
     metaDescription:
       "Ostéopathie générale à Rochetaillée-sur-Saône : douleurs de dos, maux de tête, troubles digestifs, séquelles de traumatismes. Aline Nebout, ostéopathe D.O.",
     imageUrl:
-      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&h=600&fit=crop",
     imageAlt:
-      "Séance d'ostéopathie générale — manipulation douce du dos",
+      "Séance d'ostéopathie — manipulation douce du dos par les mains",
     description: [
       "L'ostéopathie générale s'adresse à tous, du nourrisson à la personne âgée. Elle repose sur des techniques manuelles douces visant à restaurer la mobilité des différentes structures du corps : articulations, muscles, fascias et viscères. Aline Nebout vous accompagne pour soulager les douleurs de dos, les maux de tête, les troubles digestifs ou encore les séquelles de traumatismes anciens.",
       "Chaque consultation débute par un bilan complet afin de comprendre l'origine de vos douleurs. L'approche est globale : plutôt que de traiter uniquement le symptôme, Aline recherche les déséquilibres qui en sont la cause. Les techniques utilisées sont adaptées à chaque patient et à chaque situation.",
@@ -135,9 +135,9 @@ const specialties: Record<string, SpecialtyData> = {
     metaDescription:
       "Traitement ostéopathique des cicatrices à Rochetaillée-sur-Saône : adhérences post-chirurgicales, césarienne, appendicectomie. Aline Nebout, ostéopathe D.O.",
     imageUrl:
-      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&h=600&fit=crop",
+      "/images/cicatrice-travail.jpg",
     imageAlt:
-      "Traitement ostéopathique des cicatrices et adhérences",
+      "Mains d'ostéopathe travaillant sur une cicatrice",
     description: [
       "Toute cicatrice, qu'elle soit chirurgicale ou traumatique, peut créer des adhérences dans les tissus sous-jacents. Ces adhérences perturbent la mobilité des fascias et peuvent avoir des répercussions à distance : une cicatrice de césarienne peut entraîner des douleurs dorso-lombaires, une cicatrice d'appendicectomie peut provoquer des sciatalgies, une cicatrice de péridurale peut être à l'origine de cervicalgies, et une cicatrice de thyroïde peut impacter la mobilité cervicale.",
       "Les adhérences cicatricielles peuvent également avoir un impact sur les viscères voisins, perturbant leur mobilité et leur fonctionnement. C'est pourquoi il est important de traiter les cicatrices en ostéopathie, même des années après l'intervention chirurgicale. Les résultats sont souvent surprenants, tant sur la souplesse de la cicatrice que sur les douleurs associées.",
@@ -164,7 +164,7 @@ const specialties: Record<string, SpecialtyData> = {
     metaDescription:
       "Ostéopathie du sport à Rochetaillée-sur-Saône : trail, course à pied, triathlon, prévention blessures, conseils foulée. Aline Nebout, ostéopathe D.O.",
     imageUrl:
-      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+      "/images/sportifs.jpg",
     imageAlt:
       "Sportif en course à pied — ostéopathie du sport",
     description: [
@@ -235,16 +235,16 @@ export default async function SpecialtyPage({ params }: PageProps) {
   return (
     <>
       {/* Hero image */}
-      <section className="relative h-64 sm:h-80 md:h-96 w-full overflow-hidden">
+      <section className="relative h-80 sm:h-96 md:h-[28rem] lg:h-[32rem] w-full overflow-hidden">
         <Image
           src={data.imageUrl}
           alt={data.imageAlt}
           fill
-          className="object-cover"
+          className="object-cover object-center"
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-bg-soft" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-bg-soft" />
       </section>
 
       {/* Content */}

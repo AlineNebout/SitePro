@@ -314,7 +314,7 @@ export default function CoachingPage() {
                     et sans douleur.
                   </p>
                   <a
-                    href="https://betrail.fr/runner/aline-nebout"
+                    href="https://www.betrail.run/runner/nebout.aline/overview"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 mt-4 text-emerald-600 font-semibold text-sm hover:text-emerald-700 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none rounded"
