@@ -85,7 +85,7 @@ export default function HomePage() {
                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/60 backdrop-blur-sm border border-primary/20 mx-auto lg:mx-0"
               >
                 <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-sm font-medium text-text-dark">Pôle Santé de Rochetaillée-sur-Saône</span>
+                <span className="text-sm font-medium text-text-dark">Professionnel de santé diplômé et certifié — Pôle Santé de Rochetaillée-sur-Saône</span>
               </motion.div>
 
               <motion.h1
