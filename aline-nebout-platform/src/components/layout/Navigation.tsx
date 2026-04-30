@@ -172,6 +172,7 @@ export default function Navigation() {
           >
             Se connecter
           </Link>
+        </div>
       )}
     </>
   );
