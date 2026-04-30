@@ -1,5 +1,4 @@
 import Link from "next/link";
-import NewsletterForm from "@/components/forms/NewsletterForm";
 
 export default function Footer() {
   return (
@@ -93,17 +92,6 @@ export default function Footer() {
               <li><Link href="/mentions-legales" className="hover:text-primary transition-colors duration-200 cursor-pointer">Mentions légales</Link></li>
               <li><Link href="/politique-confidentialite" className="hover:text-primary transition-colors duration-200 cursor-pointer">Politique de confidentialité</Link></li>
             </ul>
-          </div>
-        </div>
-
-        {/* Newsletter */}
-        <div className="border-t border-primary/10 pt-8 pb-8">
-          <div className="max-w-md">
-            <h3 className="font-heading text-sm font-bold mb-3">Newsletter</h3>
-            <p className="text-text-muted text-sm mb-4">
-              Recevez nos conseils et actualités directement dans votre boîte mail.
-            </p>
-            <NewsletterForm variant="footer" />
           </div>
         </div>
 
