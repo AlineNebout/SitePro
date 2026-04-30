@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aline Nebout — Ostéopathe D.O. &amp; Réflexes Archaïques | Rochetaillée-sur-Saône</title>
+  <meta name="description" content="Aline Nebout, ostéopathe D.O. spécialisée en ostéopathie douce, réflexes archaïques, femme enceinte, nourrisson et sportif. Cabinet au Pôle Santé de Rochetaillée-sur-Saône." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&family=Varela+Round&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#EC4899',
+            'primary-light': '#F9A8D4',
+            accent: '#8B5CF6',
+            'bg-soft': '#FDF2F8',
+            'bg-accent': '#F5F3FF',
+            'text-dark': '#831843',
+            'text-muted': '#9D174D',
+            'accent-dark': '#5B21B6',
+          },
+          fontFamily: {
+            heading: ['"Varela Round"', 'sans-serif'],
+            body: ['"Nunito Sans"', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    @keyframes pulse-soft { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.05); } }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-badge { animation: fadeInUp 0.6s ease-out both; }
+    .hero-title { animation: fadeInUp 0.6s ease-out 0.15s both; }
+    .hero-subtitle { animation: fadeInUp 0.6s ease-out 0.25s both; }
+    .hero-desc { animation: fadeInUp 0.6s ease-out 0.35s both; }
+    .hero-cta { animation: fadeInUp 0.6s ease-out 0.45s both; }
+    .hero-img { animation: fadeInRight 0.8s ease-out 0.3s both; }
+    .hero-float { animation: float 6s ease-in-out infinite; }
+    .hero-blob { animation: pulse-soft 8s ease-in-out infinite; }
+    .tab-content { animation: slideIn 0.4s ease-out both; }
+    .scroll-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .scroll-reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body class="bg-bg-soft font-body text-text-dark antialiased">
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="fixed top-4 left-4 right-4 z-50 bg-white/80 backdrop-blur-md rounded-2xl shadow-md px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between transition-colors duration-200" aria-label="Navigation principale">
+    <a href="#hero" class="font-heading text-lg text-primary font-bold cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg px-1">
+      Aline Nebout
+    </a>
+    <button id="menu-toggle" class="lg:hidden cursor-pointer p-2 rounded-lg focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none" aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu">
+      <svg class="w-6 h-6 text-text-dark" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+    </button>
+    <ul class="hidden lg:flex items-center gap-6 text-sm font-medium">
+      <li><a href="#services" class="hover:text-primary transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg px-2 py-1">Services</a></li>
+      <li><a href="#about" class="hover:text-primary transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg px-2 py-1">À propos</a></li>
+      <li><a href="#tarifs" class="hover:text-primary transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg px-2 py-1">Tarifs</a></li>
+      <li><a href="#contact" class="hover:text-primary transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg px-2 py-1">Contact</a></li>
+      <li><a href="https://www.doctolib.fr/osteopathe/rochetaillee-sur-saone/aline-nebout" target="_blank" rel="noopener noreferrer" class="bg-primary text-white px-5 py-2 rounded-xl hover:bg-accent transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none">Prendre RDV</a></li>
+    </ul>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-40 bg-white/95 backdrop-blur-md flex-col items-center justify-center gap-6 text-lg font-medium hidden" role="dialog" aria-label="Menu de navigation">
+    <button id="menu-close" class="absolute top-6 right-6 cursor-pointer p-2 rounded-lg focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none" aria-label="Fermer le menu">
+      <svg class="w-6 h-6 text-text-dark" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
+    <a href="#services" class="mobile-link hover:text-primary transition-colors duration-200 cursor-pointer">Services</a>
+    <a href="#about" class="mobile-link hover:text-primary transition-colors duration-200 cursor-pointer">À propos</a>
+    <a href="#tarifs" class="mobile-link hover:text-primary transition-colors duration-200 cursor-pointer">Tarifs</a>
+    <a href="#contact" class="mobile-link hover:text-primary transition-colors duration-200 cursor-pointer">Contact</a>
+    <a href="https://www.doctolib.fr/osteopathe/rochetaillee-sur-saone/aline-nebout" target="_blank" rel="noopener noreferrer" class="mobile-link bg-primary text-white px-6 py-3 rounded-xl hover:bg-accent transition-colors duration-200 cursor-pointer">Prendre RDV</a>
+  </div>
