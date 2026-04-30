@@ -5,7 +5,6 @@ export async function updateSession(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  // Skip if Supabase not configured
   if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes("your-project")) {
     return NextResponse.next({ request });
   }
@@ -29,7 +28,6 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  // Refresh session
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -42,6 +40,7 @@ export async function updateSession(request: NextRequest) {
     "/exercices",
     "/progression",
     "/mon-profil",
+    "/mes-articles",
     "/communaute",
   ];
 
@@ -65,15 +64,23 @@ export async function updateSession(request: NextRequest) {
       return NextResponse.redirect(url);
     }
 
-    // Check admin role in profiles table
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .single();
+    // Check admin role — use RPC or direct query with service role
+    // Since anon key + RLS can be tricky, we use a simple approach:
+    // Query profiles with the user's own session (RLS allows reading own profile)
+    try {
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
 
-    if (!profile || profile.role !== "admin") {
-      // Not admin — redirect to home
+      if (error || !profile || profile.role !== "admin") {
+        const url = request.nextUrl.clone();
+        url.pathname = "/";
+        return NextResponse.redirect(url);
+      }
+    } catch {
+      // If query fails, deny access
       const url = request.nextUrl.clone();
       url.pathname = "/";
       return NextResponse.redirect(url);
