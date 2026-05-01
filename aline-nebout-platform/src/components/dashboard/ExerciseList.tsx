@@ -12,11 +12,13 @@ export interface Exercise {
 interface ExerciseListProps {
   exercises: Exercise[];
   initialCompletions: string[];
+  programId?: string;
 }
 
 export default function ExerciseList({
   exercises,
   initialCompletions,
+  programId,
 }: ExerciseListProps) {
   const [completions, setCompletions] = useState<Set<string>>(
     new Set(initialCompletions)
@@ -26,17 +28,32 @@ export default function ExerciseList({
   const totalCount = exercises.length;
   const percentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
-  function toggleExercise(id: string) {
-    setCompletions((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
+  async function toggleExercise(id: string) {
+    const wasCompleted = completions.has(id);
+    const next = new Set(completions);
+    if (wasCompleted) {
+      next.delete(id);
+    } else {
+      next.add(id);
+    }
+    setCompletions(next);
+
+    // Persist to API if programId is provided
+    if (programId) {
+      try {
+        await fetch(`/api/exercises/${programId}/complete`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            exerciseId: id,
+            completed: !wasCompleted,
+          }),
+        });
+      } catch {
+        // Revert on error
+        setCompletions(completions);
       }
-      return next;
-    });
-    // TODO: Persist completion state to Supabase
+    }
   }
 
   return (
@@ -124,9 +141,11 @@ export default function ExerciseList({
                   <p className="text-sm text-text-muted mt-0.5">
                     {exercise.description}
                   </p>
-                  <span className="inline-block mt-2 text-xs font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">
-                    {exercise.repetitions}
-                  </span>
+                  {exercise.repetitions && (
+                    <span className="inline-block mt-2 text-xs font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">
+                      {exercise.repetitions}
+                    </span>
+                  )}
                 </div>
               </label>
             </li>

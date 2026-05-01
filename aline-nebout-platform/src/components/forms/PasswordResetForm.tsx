@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { passwordResetSchema } from "@/lib/validations/auth";
 
 export default function PasswordResetForm() {
   const [email, setEmail] = useState("");
@@ -14,8 +15,10 @@ export default function PasswordResetForm() {
     e.preventDefault();
     setError("");
 
-    if (!email) {
-      setError("L'email est requis");
+    const result = passwordResetSchema.safeParse({ email });
+    if (!result.success) {
+      const firstIssue = result.error.issues[0];
+      setError(firstIssue?.message ?? "L'email est requis");
       return;
     }
 

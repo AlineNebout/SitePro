@@ -128,33 +128,33 @@
 ## Phase 6: Authentication & Coaching Dashboard
 
 - [x] 15. Implement authentication system
-  - [ ] 15.1 Create `app/(auth)/connexion/page.tsx` (login form)
-  - [ ] 15.2 Create `app/(auth)/inscription/page.tsx` (registration form)
-  - [ ] 15.3 Create `app/(auth)/mot-de-passe-oublie/page.tsx` (password reset)
-  - [ ] 15.4 Create `app/api/auth/callback/route.ts` (Supabase auth callback)
-  - [ ] 15.5 Create Next.js middleware for role-based route protection
-  - [ ] 15.6 Implement generic auth error messages (Property 6)
-  - [ ] 15.7 Create Zod validation schemas for auth forms in `lib/validations/`
+  - [x] 15.1 Create `app/(auth)/connexion/page.tsx` (login form)
+  - [x] 15.2 Create `app/(auth)/inscription/page.tsx` (registration form)
+  - [x] 15.3 Create `app/(auth)/mot-de-passe-oublie/page.tsx` (password reset)
+  - [x] 15.4 Create `app/api/auth/callback/route.ts` (Supabase auth callback)
+  - [x] 15.5 Create Next.js middleware for role-based route protection
+  - [x] 15.6 Implement generic auth error messages (Property 6)
+  - [x] 15.7 Create Zod validation schemas for auth forms in `lib/validations/`
 
-- [ ] 16. Build Coaching dashboard
-  - [ ] 16.1 Create `app/(dashboard)/layout.tsx` (sidebar nav)
-  - [ ] 16.2 Create `app/(dashboard)/tableau-de-bord/page.tsx` (dashboard home)
-  - [ ] 16.3 Build `SessionSummary` component (upcoming + recent sessions)
-  - [ ] 16.4 Build empty states (no sessions, no history, welcome message)
+- [x] 16. Build Coaching dashboard
+  - [x] 16.1 Create `app/(dashboard)/layout.tsx` (sidebar nav)
+  - [x] 16.2 Create `app/(dashboard)/tableau-de-bord/page.tsx` (dashboard home)
+  - [x] 16.3 Build `SessionSummary` component (upcoming + recent sessions)
+  - [x] 16.4 Build empty states (no sessions, no history, welcome message)
 
-- [ ] 17. Build Exercise programs feature
-  - [ ] 17.1 Create SQL migration for `exercise_programs`, `exercises`, `program_assignments`, `exercise_completions`
-  - [ ] 17.2 Create `app/(dashboard)/exercices/page.tsx` (program list)
-  - [ ] 17.3 Create `app/(dashboard)/exercices/[programId]/page.tsx` (program detail)
-  - [ ] 17.4 Implement exercise completion tracking (mark complete + timestamp)
-  - [ ] 17.5 Implement completion percentage calculation (Property 9)
+- [x] 17. Build Exercise programs feature
+  - [x] 17.1 Create SQL migration for `exercise_programs`, `exercises`, `program_assignments`, `exercise_completions`
+  - [x] 17.2 Create `app/(dashboard)/exercices/page.tsx` (program list)
+  - [x] 17.3 Create `app/(dashboard)/exercices/[programId]/page.tsx` (program detail)
+  - [x] 17.4 Implement exercise completion tracking (mark complete + timestamp)
+  - [x] 17.5 Implement completion percentage calculation (Property 9)
 
-- [ ] 18. Build Progress tracking feature
-  - [ ] 18.1 Install Recharts
-  - [ ] 18.2 Create `app/(dashboard)/progression/page.tsx`
-  - [ ] 18.3 Build `ProgressChart` component (completion rate over time)
-  - [ ] 18.4 Build `StatsCards` component (total sessions, exercises, active weeks — Property 10)
-  - [ ] 18.5 Implement minimum data point check (< 2 points → encouragement message)
+- [x] 18. Build Progress tracking feature
+  - [x] 18.1 Install Recharts
+  - [x] 18.2 Create `app/(dashboard)/progression/page.tsx`
+  - [x] 18.3 Build `ProgressChart` component (completion rate over time)
+  - [x] 18.4 Build `StatsCards` component (total sessions, exercises, active weeks — Property 10)
+  - [x] 18.5 Implement minimum data point check (< 2 points → encouragement message)
 
 ## Phase 7: Pôle Santé — Directory & Community
 

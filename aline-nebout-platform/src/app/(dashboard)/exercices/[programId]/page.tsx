@@ -1,151 +1,77 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useEffect, useState, use } from "react";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import ExerciseList from "@/components/dashboard/ExerciseList";
 import ScrollReveal from "@/components/animation/ScrollReveal";
 import type { Exercise } from "@/components/dashboard/ExerciseList";
 
-// TODO: Replace with data from Supabase
-const programsData: Record<
-  string,
-  {
+interface ProgramData {
+  program: {
+    id: string;
     title: string;
     description: string;
-    exercises: Exercise[];
-    initialCompletions: string[];
-  }
-> = {
-  "programme-foulee-s1": {
-    title: "Programme foulée — Semaine 1",
-    description:
-      "Exercices de base pour améliorer votre posture de course et votre cadence. Travaillez chaque exercice à votre rythme, en vous concentrant sur la qualité du mouvement.",
-    exercises: [
-      {
-        id: "ex-1",
-        name: "Éducatif montées de genoux",
-        description:
-          "Montées de genoux dynamiques sur place, en gardant le buste droit et les bras actifs.",
-        repetitions: "3 × 30 secondes",
-      },
-      {
-        id: "ex-2",
-        name: "Talons-fesses",
-        description:
-          "Talons-fesses en avançant lentement, en veillant à garder les genoux alignés.",
-        repetitions: "3 × 30 secondes",
-      },
-      {
-        id: "ex-3",
-        name: "Griffé du pied",
-        description:
-          "Exercice de griffé pour travailler l'attaque du pied au sol et la réactivité.",
-        repetitions: "3 × 20 mètres",
-      },
-      {
-        id: "ex-4",
-        name: "Foulées bondissantes",
-        description:
-          "Foulées amples et bondissantes en poussant bien sur la jambe arrière.",
-        repetitions: "3 × 30 mètres",
-      },
-      {
-        id: "ex-5",
-        name: "Course en ligne droite — focus posture",
-        description:
-          "Course à allure modérée en se concentrant sur le placement du bassin et le regard loin devant.",
-        repetitions: "4 × 100 mètres",
-      },
-    ],
-    initialCompletions: ["ex-1", "ex-2", "ex-3"],
-  },
-  "renforcement-musculaire-coureur": {
-    title: "Renforcement musculaire coureur",
-    description:
-      "Programme de renforcement ciblé pour les muscles sollicités en course à pied. Réalisez les exercices 2 à 3 fois par semaine, en respectant les temps de repos.",
-    exercises: [
-      {
-        id: "rm-1",
-        name: "Squats",
-        description:
-          "Squats classiques, pieds largeur d'épaules, descente contrôlée jusqu'à 90°.",
-        repetitions: "3 × 15 répétitions",
-      },
-      {
-        id: "rm-2",
-        name: "Fentes avant alternées",
-        description:
-          "Fentes avant en alternant les jambes, genou arrière frôlant le sol.",
-        repetitions: "3 × 12 par jambe",
-      },
-      {
-        id: "rm-3",
-        name: "Pont fessier",
-        description:
-          "Allongé sur le dos, pieds au sol, montée du bassin en contractant les fessiers.",
-        repetitions: "3 × 20 répétitions",
-      },
-      {
-        id: "rm-4",
-        name: "Gainage planche",
-        description:
-          "Position de planche sur les avant-bras, corps aligné, abdominaux engagés.",
-        repetitions: "3 × 45 secondes",
-      },
-      {
-        id: "rm-5",
-        name: "Gainage latéral",
-        description:
-          "Planche latérale sur un avant-bras, hanches hautes et alignées.",
-        repetitions: "3 × 30 secondes par côté",
-      },
-      {
-        id: "rm-6",
-        name: "Mollets sur marche",
-        description:
-          "Montées sur pointes sur le bord d'une marche, descente lente sous l'horizontale.",
-        repetitions: "3 × 20 répétitions",
-      },
-      {
-        id: "rm-7",
-        name: "Chaise murale",
-        description:
-          "Dos contre le mur, cuisses parallèles au sol, maintien statique.",
-        repetitions: "3 × 40 secondes",
-      },
-      {
-        id: "rm-8",
-        name: "Step-ups",
-        description:
-          "Montées sur une marche ou un banc en alternant les jambes, poussée complète.",
-        repetitions: "3 × 12 par jambe",
-      },
-    ],
-    initialCompletions: ["rm-1", "rm-2"],
-  },
-};
-
-export function generateStaticParams() {
-  return Object.keys(programsData).map((programId) => ({ programId }));
-}
-
-type Props = {
-  params: Promise<{ programId: string }>;
-};
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { programId } = await params;
-  const program = programsData[programId];
-  return {
-    title: program?.title ?? "Programme d'exercices",
-    description:
-      program?.description ?? "Détail du programme d'exercices personnalisé.",
   };
+  exercises: Array<{
+    id: string;
+    name: string;
+    description: string;
+    repetitions: string;
+    sort_order: number;
+  }>;
+  completedIds: string[];
 }
 
-export default async function ProgramDetailPage({ params }: Props) {
-  const { programId } = await params;
-  const program = programsData[programId];
+export default function ProgramDetailPage({
+  params,
+}: {
+  params: Promise<{ programId: string }>;
+}) {
+  const { programId } = use(params);
+  const [data, setData] = useState<ProgramData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  if (!program) {
+  useEffect(() => {
+    async function fetchProgram() {
+      try {
+        const res = await fetch(`/api/exercises/${programId}`);
+        if (!res.ok) {
+          setError(true);
+          return;
+        }
+        const json = await res.json();
+        setData(json);
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProgram();
+  }, [programId]);
+
+  if (loading) {
+    return (
+      <div className="max-w-3xl mx-auto space-y-6">
+        <div className="animate-pulse">
+          <div className="h-4 bg-emerald-100 rounded w-1/4 mb-6" />
+          <div className="h-7 bg-emerald-100 rounded w-1/2 mb-3" />
+          <div className="h-4 bg-emerald-50 rounded w-3/4 mb-6" />
+          <div className="space-y-3">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="h-20 bg-white/70 rounded-xl border border-emerald-100"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !data) {
     return (
       <div className="max-w-4xl mx-auto text-center py-16">
         <h1 className="font-heading text-2xl text-text-dark mb-2">
@@ -158,8 +84,15 @@ export default async function ProgramDetailPage({ params }: Props) {
     );
   }
 
-  const completedCount = program.initialCompletions.length;
-  const totalCount = program.exercises.length;
+  const exercises: Exercise[] = data.exercises.map((e) => ({
+    id: e.id,
+    name: e.name,
+    description: e.description ?? "",
+    repetitions: e.repetitions ?? "",
+  }));
+
+  const completedCount = data.completedIds.length;
+  const totalCount = exercises.length;
   const percentage =
     totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
@@ -168,16 +101,16 @@ export default async function ProgramDetailPage({ params }: Props) {
       <Breadcrumb
         items={[
           { label: "Exercices", href: "/exercices" },
-          { label: program.title },
+          { label: data.program.title },
         ]}
       />
 
       <ScrollReveal>
         <div>
           <h1 className="font-heading text-2xl sm:text-3xl text-text-dark">
-            {program.title}
+            {data.program.title}
           </h1>
-          <p className="text-text-muted mt-2">{program.description}</p>
+          <p className="text-text-muted mt-2">{data.program.description}</p>
           <p className="text-sm text-emerald-600 font-medium mt-3">
             {completedCount} sur {totalCount} exercices complétés ({percentage}%)
           </p>
@@ -186,8 +119,9 @@ export default async function ProgramDetailPage({ params }: Props) {
 
       <ScrollReveal delay={0.15}>
         <ExerciseList
-          exercises={program.exercises}
-          initialCompletions={program.initialCompletions}
+          exercises={exercises}
+          initialCompletions={data.completedIds}
+          programId={programId}
         />
       </ScrollReveal>
     </div>

@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { registerSchema } from "@/lib/validations/auth";
 
 export default function RegisterForm() {
   const [name, setName] = useState("");
@@ -16,12 +17,15 @@ export default function RegisterForm() {
     e.preventDefault();
     setError("");
 
-    if (!name || !email || !password) {
-      setError("Tous les champs sont requis");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Le mot de passe doit contenir au moins 6 caractères");
+    const result = registerSchema.safeParse({
+      name,
+      email,
+      password,
+      confirmPassword: password,
+    });
+    if (!result.success) {
+      const firstIssue = result.error.issues[0];
+      setError(firstIssue?.message ?? "Tous les champs sont requis");
       return;
     }
 

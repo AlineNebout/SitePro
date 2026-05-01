@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { loginSchema } from "@/lib/validations/auth";
 
 type Tab = "patient" | "praticien" | "admin";
 
@@ -73,7 +74,8 @@ export default function LoginTabs() {
     e.preventDefault();
     setError("");
 
-    if (!email.trim() || !password) {
+    const result = loginSchema.safeParse({ email: email.trim(), password });
+    if (!result.success) {
       setError("Identifiants incorrects.");
       return;
     }

@@ -1,17 +1,88 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 import ScrollReveal from "@/components/animation/ScrollReveal";
+import SessionSummary from "@/components/dashboard/SessionSummary";
 
-export const metadata: Metadata = {
-  title: "Tableau de bord",
-  description:
-    "Votre espace coaching personnel. Suivez vos exercices, votre progression et vos prochaines séances.",
-};
+interface WorkshopBooking {
+  id: string;
+  status: string;
+  workshop: {
+    id: string;
+    date: string;
+    time_display: string;
+    location: string;
+  } | null;
+}
 
-// TODO: Replace with actual user data from Supabase
-const userName = "Utilisateur";
+interface ProgramAssignment {
+  id: string;
+  program: {
+    id: string;
+    title: string;
+    description: string;
+  } | null;
+}
 
 export default function TableauDeBordPage() {
+  const [userName, setUserName] = useState("Utilisateur");
+  const [bookings, setBookings] = useState<WorkshopBooking[]>([]);
+  const [programs, setPrograms] = useState<ProgramAssignment[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const name =
+        user.user_metadata?.full_name ||
+        user.email?.split("@")[0] ||
+        "Utilisateur";
+      setUserName(name);
+
+      // Fetch upcoming workshop bookings
+      const { data: bookingData } = await supabase
+        .from("workshop_bookings")
+        .select("id, status, workshop:workshops(id, date, time_display, location)")
+        .eq("user_id", user.id)
+        .eq("status", "confirmed")
+        .order("created_at", { ascending: false })
+        .limit(5);
+
+      if (bookingData) {
+        setBookings(
+          bookingData.map((b) => ({
+            ...b,
+            workshop: Array.isArray(b.workshop) ? b.workshop[0] ?? null : b.workshop,
+          }))
+        );
+      }
+
+      // Fetch program assignments
+      const { data: programData } = await supabase
+        .from("program_assignments")
+        .select("id, program:exercise_programs(id, title, description)")
+        .eq("user_id", user.id)
+        .limit(5);
+
+      if (programData) {
+        setPrograms(
+          programData.map((p) => ({
+            ...p,
+            program: Array.isArray(p.program) ? p.program[0] ?? null : p.program,
+          }))
+        );
+      }
+
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       {/* Welcome */}
@@ -53,17 +124,25 @@ export default function TableauDeBordPage() {
                 Prochaines séances
               </h2>
             </div>
-            <div className="text-center py-4">
-              <p className="text-text-muted text-sm">
-                Aucune séance programmée pour le moment.
-              </p>
-              <Link
-                href="/coaching/ateliers"
-                className="inline-block mt-3 text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded"
-              >
-                Réserver un atelier &rarr;
-              </Link>
-            </div>
+            {loading ? (
+              <div className="text-center py-4">
+                <p className="text-text-muted text-sm">Chargement...</p>
+              </div>
+            ) : bookings.length > 0 ? (
+              <SessionSummary bookings={bookings} />
+            ) : (
+              <div className="text-center py-4">
+                <p className="text-text-muted text-sm">
+                  Aucune séance programmée pour le moment.
+                </p>
+                <Link
+                  href="/coaching/ateliers"
+                  className="inline-block mt-3 text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded"
+                >
+                  Réserver un atelier &rarr;
+                </Link>
+              </div>
+            )}
           </div>
         </ScrollReveal>
 
@@ -130,18 +209,37 @@ export default function TableauDeBordPage() {
                 Programme en cours
               </h2>
             </div>
-            <div className="text-center py-4">
-              <p className="text-text-muted text-sm">
-                Aucun programme actif. Explorez les exercices disponibles pour
-                démarrer.
-              </p>
-              <Link
-                href="/exercices"
-                className="inline-block mt-3 text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded"
-              >
-                Découvrir les programmes &rarr;
-              </Link>
-            </div>
+            {loading ? (
+              <div className="text-center py-4">
+                <p className="text-text-muted text-sm">Chargement...</p>
+              </div>
+            ) : programs.length > 0 ? (
+              <ul className="space-y-2">
+                {programs.map((pa) => (
+                  <li key={pa.id}>
+                    <Link
+                      href={`/exercices/${pa.program?.id}`}
+                      className="block text-sm text-emerald-700 hover:text-emerald-800 font-medium transition-colors cursor-pointer"
+                    >
+                      {pa.program?.title ?? "Programme"}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="text-center py-4">
+                <p className="text-text-muted text-sm">
+                  Aucun programme actif. Explorez les exercices disponibles pour
+                  démarrer.
+                </p>
+                <Link
+                  href="/exercices"
+                  className="inline-block mt-3 text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded"
+                >
+                  Découvrir les programmes &rarr;
+                </Link>
+              </div>
+            )}
           </div>
         </ScrollReveal>
       </div>

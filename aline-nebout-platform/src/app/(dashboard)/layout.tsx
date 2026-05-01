@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 const navItems = [
   {
@@ -28,7 +30,7 @@ const navItems = [
     label: "Progression",
     icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25A1.125 1.125 0 0116.5 19.875V4.125z" />
       </svg>
     ),
   },
@@ -43,15 +45,37 @@ const navItems = [
   },
 ];
 
+async function handleSignOut() {
+  const supabase = createClient();
+  await supabase.auth.signOut();
+  window.location.href = "/";
+}
+
 export default function DashboardLayout({
   children,
 }: {
   children: ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [userName, setUserName] = useState("Chargement...");
 
-  // TODO: Replace with actual user data from Supabase auth
-  const userName = "Utilisateur";
+  useEffect(() => {
+    async function fetchUser() {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        router.push("/connexion");
+        return;
+      }
+      const name =
+        user.user_metadata?.full_name ||
+        user.email?.split("@")[0] ||
+        "Utilisateur";
+      setUserName(name);
+    }
+    fetchUser();
+  }, [router]);
 
   return (
     <div className="min-h-screen bg-bg-soft">
@@ -117,12 +141,7 @@ export default function DashboardLayout({
         <div className="p-4 border-t border-emerald-100">
           <button
             type="button"
-            onClick={async () => {
-              const { createClient } = await import("@/lib/supabase/client");
-              const supabase = createClient();
-              await supabase.auth.signOut();
-              window.location.href = "/";
-            }}
+            onClick={handleSignOut}
             className="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium text-text-muted hover:bg-red-50 hover:text-red-600 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
@@ -189,9 +208,7 @@ export default function DashboardLayout({
           <li>
             <button
               type="button"
-              onClick={() => {
-                // TODO: Supabase signOut then redirect to /connexion
-              }}
+              onClick={handleSignOut}
               className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl text-xs font-medium text-text-muted hover:text-red-600 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">

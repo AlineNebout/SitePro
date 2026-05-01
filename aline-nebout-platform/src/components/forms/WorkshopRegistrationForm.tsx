@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { workshopRegistrationSchema } from "@/lib/validations/workshop";
 
 interface WorkshopRegistrationFormProps {
   workshopId: string;
@@ -23,22 +24,16 @@ interface FormErrors {
 }
 
 function validateForm(data: FormData): FormErrors {
+  const result = workshopRegistrationSchema.safeParse(data);
+  if (result.success) return {};
+
   const errors: FormErrors = {};
-
-  if (!data.name.trim()) {
-    errors.name = "Le nom est requis";
+  for (const issue of result.error.issues) {
+    const field = issue.path[0] as keyof FormErrors | undefined;
+    if (field && !errors[field]) {
+      errors[field] = issue.message;
+    }
   }
-  if (!data.email.trim()) {
-    errors.email = "L'email est requis";
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-    errors.email = "Email invalide";
-  }
-  if (!data.phone.trim()) {
-    errors.phone = "Le téléphone est requis";
-  } else if (!/^[\d\s+()-]{10,}$/.test(data.phone.replace(/\s/g, ""))) {
-    errors.phone = "Numéro de téléphone invalide";
-  }
-
   return errors;
 }
 
