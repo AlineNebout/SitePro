@@ -87,16 +87,16 @@
   - [x] 10.5 Create API route `app/api/lead-capture/route.ts` (store in Supabase)
   - [x] 10.6 Create parent guide PDF placeholder
 
-- [ ] 11. Build Schools outreach sub-page
+- [x] 11. Build Schools outreach sub-page
   - [x] 11.1 Create `app/(public)/reflexes/ecoles/page.tsx`
-  - [ ] 11.2 Build `SchoolContactForm` component (school name, contact, type, message)
-  - [ ] 11.3 Create API route `app/api/contact/route.ts` (store inquiry + email notification)
-  - [ ] 11.4 Add intervention descriptions (info sessions, workshops, screening)
+  - [x] 11.2 Build `SchoolContactForm` component (school name, contact, type, message)
+  - [x] 11.3 Create API route `app/api/contact/route.ts` (store inquiry + email notification)
+  - [x] 11.4 Add intervention descriptions (info sessions, workshops, screening)
 
 - [ ] 12. Build Reflex article pages
-  - [ ] 12.1 Create `app/(public)/reflexes/articles/page.tsx` (article index with sphere filtering)
-  - [ ] 12.2 Create `app/(public)/reflexes/articles/[slug]/page.tsx` (individual article)
-  - [ ] 12.3 Seed reflex article data in Supabase (Moro, Galant, RTAC, RTSC, Grasping, Babinski)
+  - [x] 12.1 Create `app/(public)/reflexes/articles/page.tsx` (article index with sphere filtering)
+  - [x] 12.2 Create `app/(public)/reflexes/articles/[slug]/page.tsx` (individual article)
+  - [x] 12.3 Seed reflex article data in Supabase (Moro, Galant, RTAC, RTSC, Grasping, Babinski)
   - [ ] 12.4 Implement sphere filter (motor, emotional, cognitive tags)
   - [ ] 12.5 Add prev/next article navigation
   - [ ] 12.6 Add breadcrumb (Home > Réflexes Archaïques > [Reflex Name])
@@ -166,19 +166,19 @@
   - [x] 19.5 Build `PractitionerCard` component
   - [x] 19.6 Add breadcrumb (Home > Pôle Santé > [Practitioner])
 
-- [ ] 20. Build Practitioner account management
-  - [ ] 20.1 Create `app/(practitioner)/layout.tsx`
-  - [ ] 20.2 Create `app/(practitioner)/mon-profil/page.tsx` (profile edit form)
-  - [ ] 20.3 Implement profile update API (own profile only, RLS enforced)
+- [x] 20. Build Practitioner account management
+  - [x] 20.1 Create `app/(practitioner)/layout.tsx`
+  - [x] 20.2 Create `app/(practitioner)/mon-profil/page.tsx` (profile edit form)
+  - [x] 20.3 Implement profile update API (own profile only, RLS enforced)
 
-- [ ] 21. Build Community space
-  - [ ] 21.1 Create SQL migration for `community_posts`, `community_comments`, `post_attachments`
-  - [ ] 21.2 Create `app/(practitioner)/communaute/page.tsx`
-  - [ ] 21.3 Build `PostFeed` component (reverse chronological, category filter)
-  - [ ] 21.4 Build `PostEditor` component (title, content, category, file attachments)
-  - [ ] 21.5 Build `PostCard` component with comment thread
-  - [ ] 21.6 Implement file upload to Supabase Storage (PDF, images, max 10MB)
-  - [ ] 21.7 Apply RLS: practitioners + admin only
+- [x] 21. Build Community space
+  - [x] 21.1 Create SQL migration for `community_posts`, `community_comments`, `post_attachments`
+  - [x] 21.2 Create `app/(practitioner)/communaute/page.tsx`
+  - [x] 21.3 Build `PostFeed` component (reverse chronological, category filter)
+  - [x] 21.4 Build `PostEditor` component (title, content, category, file attachments)
+  - [x] 21.5 Build `PostCard` component with comment thread
+  - [x] 21.6 Implement file upload to Supabase Storage (PDF, images, max 10MB)
+  - [x] 21.7 Apply RLS: practitioners + admin only
 
 ## Phase 8: Rental Management
 
@@ -195,15 +195,15 @@
   - [x] 23.1 Create `app/(public)/blog/page.tsx` (blog index with category filter)
   - [x] 23.2 Create `app/(public)/blog/[slug]/page.tsx` (blog article page)
   - [ ] 23.3 Add JSON-LD Article structured data on each blog article
-  - [ ] 23.4 Add related articles section (same category, max 3 — Property 14)
-  - [ ] 23.5 Add CTA at bottom (Doctolib or coaching sign-up based on category)
+  - [x] 23.4 Add related articles section (same category, max 3 — Property 14)
+  - [x] 23.5 Add CTA at bottom (Doctolib or coaching sign-up based on category)
 
-- [ ] 24. Build Newsletter subscription
-  - [ ] 24.1 Build `NewsletterForm` component (footer + inline variants)
-  - [ ] 24.2 Create API route `app/api/newsletter/route.ts` (subscribe/unsubscribe)
-  - [ ] 24.3 Implement GDPR consent checkbox + link to privacy policy
-  - [ ] 24.4 Implement duplicate email check
-  - [ ] 24.5 Generate unsubscribe token per subscriber
+- [x] 24. Build Newsletter subscription
+  - [x] 24.1 Build `NewsletterForm` component (footer + inline variants)
+  - [x] 24.2 Create API route `app/api/newsletter/route.ts` (subscribe/unsubscribe)
+  - [x] 24.3 Implement GDPR consent checkbox + link to privacy policy
+  - [x] 24.4 Implement duplicate email check
+  - [x] 24.5 Generate unsubscribe token per subscriber
 
 ## Phase 10: Admin Panel
 
@@ -224,13 +224,13 @@
   - [ ] 26.1 Add meta tags (title, description, Open Graph, Twitter Card) on all public pages (Property 11)
   - [ ] 26.2 Create branded og:image cards (1200x630px) for each universe landing page
   - [ ] 26.3 Add LocalBusiness JSON-LD structured data on osteopathy landing + contact pages
-  - [ ] 26.4 Create `app/sitemap.ts` for dynamic sitemap generation
+  - [x] 26.4 Create `app/sitemap.ts` for dynamic sitemap generation
   - [ ] 26.5 Add share buttons on reflex articles and blog articles (Facebook, LinkedIn, WhatsApp)
   - [ ] 26.6 Add social profile links in footer (Instagram, Facebook, LinkedIn)
 
 - [ ] 27. Build Legal pages
-  - [ ] 27.1 Create `app/(public)/mentions-legales/page.tsx`
-  - [ ] 27.2 Create `app/(public)/politique-confidentialite/page.tsx`
+  - [x] 27.1 Create `app/(public)/mentions-legales/page.tsx`
+  - [x] 27.2 Create `app/(public)/politique-confidentialite/page.tsx`
   - [ ] 27.3 Implement cookie consent logic (block analytics until accepted)
 
 - [ ] 28. Integrate analytics

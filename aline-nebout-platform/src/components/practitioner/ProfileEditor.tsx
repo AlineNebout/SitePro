@@ -1,35 +1,128 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const initialData = {
-  name: "Dr. Marion Grosdemange",
-  profession: "Orthophoniste",
-  description:
-    "Orthophoniste spécialisée dans la prise en charge des troubles du langage oral et écrit chez l'enfant. Approche ludique et bienveillante.",
-  specialties: "Troubles du langage, Dyslexie, Bégaiement, Troubles de l'oralité",
-  phone: "04 78 12 34 56",
-  email: "marion.grosdemange@example.com",
-  websiteUrl: "https://www.marion-orthophonie.fr",
-  doctolibUrl: "https://www.doctolib.fr/orthophoniste/lyon/marion-grosdemange",
+interface ProfileData {
+  first_name: string;
+  last_name: string;
+  profession: string;
+  specialty: string;
+  bio: string;
+  phone: string;
+  email: string;
+  website_url: string;
+}
+
+const emptyProfile: ProfileData = {
+  first_name: "",
+  last_name: "",
+  profession: "",
+  specialty: "",
+  bio: "",
+  phone: "",
+  email: "",
+  website_url: "",
 };
 
 export default function ProfileEditor() {
-  const [form, setForm] = useState(initialData);
-  const [saved, setSaved] = useState(false);
+  const [form, setForm] = useState<ProfileData>(emptyProfile);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [feedback, setFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null);
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const res = await fetch("/api/practitioners/profile");
+        if (!res.ok) {
+          setFeedback({ type: "error", message: "Impossible de charger votre profil." });
+          setLoading(false);
+          return;
+        }
+        const data = await res.json();
+        if (data.profile) {
+          setForm({
+            first_name: data.profile.first_name ?? "",
+            last_name: data.profile.last_name ?? "",
+            profession: data.profile.profession ?? "",
+            specialty: data.profile.specialty ?? "",
+            bio: data.profile.bio ?? "",
+            phone: data.profile.phone ?? "",
+            email: data.profile.email ?? "",
+            website_url: data.profile.website_url ?? "",
+          });
+        }
+      } catch {
+        setFeedback({ type: "error", message: "Erreur de connexion au serveur." });
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProfile();
+  }, []);
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    setSaved(false);
+    setFeedback(null);
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // TODO: Save to Supabase
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    setSaving(true);
+    setFeedback(null);
+
+    try {
+      const res = await fetch("/api/practitioners/profile", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        setFeedback({
+          type: "error",
+          message: data.error || "Erreur lors de la sauvegarde.",
+        });
+        return;
+      }
+
+      setFeedback({ type: "success", message: "Modifications enregistrées" });
+      setTimeout(() => setFeedback(null), 4000);
+    } catch {
+      setFeedback({ type: "error", message: "Impossible de contacter le serveur." });
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="space-y-6 animate-pulse">
+        <div className="flex items-center gap-4">
+          <div className="w-20 h-20 rounded-2xl bg-accent/10" />
+          <div className="w-32 h-9 rounded-xl bg-accent/10" />
+        </div>
+        <div className="grid sm:grid-cols-2 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i}>
+              <div className="w-24 h-4 bg-accent/10 rounded mb-2" />
+              <div className="w-full h-10 bg-accent/10 rounded-xl" />
+            </div>
+          ))}
+        </div>
+        <div>
+          <div className="w-24 h-4 bg-accent/10 rounded mb-2" />
+          <div className="w-full h-10 bg-accent/10 rounded-xl" />
+        </div>
+        <div>
+          <div className="w-24 h-4 bg-accent/10 rounded mb-2" />
+          <div className="w-full h-24 bg-accent/10 rounded-xl" />
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -57,19 +150,37 @@ export default function ProfileEditor() {
 
       {/* Form fields */}
       <div className="grid sm:grid-cols-2 gap-6">
-        {/* Name */}
+        {/* First name */}
         <div>
           <label
-            htmlFor="profile-name"
+            htmlFor="profile-first-name"
             className="block text-sm font-semibold text-text-dark mb-2"
           >
-            Nom complet
+            Prénom
           </label>
           <input
-            id="profile-name"
-            name="name"
+            id="profile-first-name"
+            name="first_name"
             type="text"
-            value={form.name}
+            value={form.first_name}
+            onChange={handleChange}
+            className="w-full rounded-xl border border-primary/15 bg-white/80 backdrop-blur-sm px-4 py-2.5 text-sm text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/40 transition-colors duration-200"
+          />
+        </div>
+
+        {/* Last name */}
+        <div>
+          <label
+            htmlFor="profile-last-name"
+            className="block text-sm font-semibold text-text-dark mb-2"
+          >
+            Nom
+          </label>
+          <input
+            id="profile-last-name"
+            name="last_name"
+            type="text"
+            value={form.last_name}
             onChange={handleChange}
             className="w-full rounded-xl border border-primary/15 bg-white/80 backdrop-blur-sm px-4 py-2.5 text-sm text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/40 transition-colors duration-200"
           />
@@ -88,6 +199,24 @@ export default function ProfileEditor() {
             name="profession"
             type="text"
             value={form.profession}
+            onChange={handleChange}
+            className="w-full rounded-xl border border-primary/15 bg-white/80 backdrop-blur-sm px-4 py-2.5 text-sm text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/40 transition-colors duration-200"
+          />
+        </div>
+
+        {/* Specialty */}
+        <div>
+          <label
+            htmlFor="profile-specialty"
+            className="block text-sm font-semibold text-text-dark mb-2"
+          >
+            Spécialité
+          </label>
+          <input
+            id="profile-specialty"
+            name="specialty"
+            type="text"
+            value={form.specialty}
             onChange={handleChange}
             className="w-full rounded-xl border border-primary/15 bg-white/80 backdrop-blur-sm px-4 py-2.5 text-sm text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/40 transition-colors duration-200"
           />
@@ -128,81 +257,42 @@ export default function ProfileEditor() {
             className="w-full rounded-xl border border-primary/15 bg-white/80 backdrop-blur-sm px-4 py-2.5 text-sm text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/40 transition-colors duration-200"
           />
         </div>
-
-        {/* Website URL */}
-        <div>
-          <label
-            htmlFor="profile-website"
-            className="block text-sm font-semibold text-text-dark mb-2"
-          >
-            Site web
-          </label>
-          <input
-            id="profile-website"
-            name="websiteUrl"
-            type="url"
-            value={form.websiteUrl}
-            onChange={handleChange}
-            placeholder="https://www.example.com"
-            className="w-full rounded-xl border border-primary/15 bg-white/80 backdrop-blur-sm px-4 py-2.5 text-sm text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/40 transition-colors duration-200"
-          />
-        </div>
-
-        {/* Doctolib URL */}
-        <div>
-          <label
-            htmlFor="profile-doctolib"
-            className="block text-sm font-semibold text-text-dark mb-2"
-          >
-            URL Doctolib
-          </label>
-          <input
-            id="profile-doctolib"
-            name="doctolibUrl"
-            type="url"
-            value={form.doctolibUrl}
-            onChange={handleChange}
-            placeholder="https://www.doctolib.fr/..."
-            className="w-full rounded-xl border border-primary/15 bg-white/80 backdrop-blur-sm px-4 py-2.5 text-sm text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/40 transition-colors duration-200"
-          />
-        </div>
       </div>
 
-      {/* Specialties */}
+      {/* Website URL */}
       <div>
         <label
-          htmlFor="profile-specialties"
+          htmlFor="profile-website"
           className="block text-sm font-semibold text-text-dark mb-2"
         >
-          Spécialités
-          <span className="font-normal text-text-muted ml-1">(séparées par des virgules)</span>
+          Site web
         </label>
         <input
-          id="profile-specialties"
-          name="specialties"
-          type="text"
-          value={form.specialties}
+          id="profile-website"
+          name="website_url"
+          type="url"
+          value={form.website_url}
           onChange={handleChange}
-          placeholder="Ex : Ostéopathie, Kinésithérapie, Orthophonie"
+          placeholder="https://www.example.com"
           className="w-full rounded-xl border border-primary/15 bg-white/80 backdrop-blur-sm px-4 py-2.5 text-sm text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/40 transition-colors duration-200"
         />
       </div>
 
-      {/* Description */}
+      {/* Bio */}
       <div>
         <label
-          htmlFor="profile-description"
+          htmlFor="profile-bio"
           className="block text-sm font-semibold text-text-dark mb-2"
         >
-          Description
+          Biographie
         </label>
         <textarea
-          id="profile-description"
-          name="description"
+          id="profile-bio"
+          name="bio"
           rows={4}
-          value={form.description}
+          value={form.bio}
           onChange={handleChange}
-          placeholder="Décrivez votre pratique, votre approche…"
+          placeholder="Décrivez votre pratique, votre approche..."
           className="w-full rounded-xl border border-primary/15 bg-white/80 backdrop-blur-sm px-4 py-3 text-sm text-text-dark placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/40 transition-colors duration-200 resize-none"
         />
       </div>
@@ -211,16 +301,29 @@ export default function ProfileEditor() {
       <div className="flex items-center gap-4">
         <button
           type="submit"
-          className="px-6 py-2.5 rounded-xl bg-accent text-white text-sm font-semibold hover:bg-accent-dark shadow-md shadow-accent/20 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+          disabled={saving}
+          className="px-6 py-2.5 rounded-xl bg-accent text-white text-sm font-semibold hover:bg-accent-dark shadow-md shadow-accent/20 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Enregistrer les modifications
+          {saving ? "Enregistrement..." : "Enregistrer les modifications"}
         </button>
-        {saved && (
-          <span className="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-600">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
-            Modifications enregistrées
+        {feedback && (
+          <span
+            className={`inline-flex items-center gap-1.5 text-sm font-medium ${
+              feedback.type === "success" ? "text-[#10B981]" : "text-red-600"
+            }`}
+            role={feedback.type === "error" ? "alert" : "status"}
+          >
+            {feedback.type === "success" && (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            )}
+            {feedback.type === "error" && (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
+            )}
+            {feedback.message}
           </span>
         )}
       </div>

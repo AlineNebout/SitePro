@@ -104,7 +104,7 @@ export default function CommunautePublicPage() {
               Connectez-vous pour publier des articles, partager des ressources et échanger avec les autres praticiens du Pôle Santé.
             </p>
             <Link
-              href="/connexion"
+              href="/connexion?redirect=/communaute"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-accent text-white font-semibold hover:bg-accent-dark shadow-lg shadow-accent/20 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
             >
               Se connecter en tant que praticien

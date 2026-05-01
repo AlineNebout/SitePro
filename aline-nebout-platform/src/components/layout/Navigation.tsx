@@ -15,7 +15,7 @@ const universeLinks = [
 
 const sharedLinks = [
   { href: "/blog", label: "Blog" },
-  { href: "/communaute", label: "Communauté" },
+  { href: "/pole-sante/communaute", label: "Communauté" },
   { href: "/contact", label: "Contact" },
 ];
 
