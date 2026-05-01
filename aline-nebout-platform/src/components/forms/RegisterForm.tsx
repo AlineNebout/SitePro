@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 
 export default function RegisterForm() {
   const [name, setName] = useState("");
@@ -9,10 +10,12 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError("");
+
     if (!name || !email || !password) {
       setError("Tous les champs sont requis");
       return;
@@ -21,8 +24,32 @@ export default function RegisterForm() {
       setError("Le mot de passe doit contenir au moins 6 caractères");
       return;
     }
-    // TODO: Supabase auth signup
-    setSuccess(true);
+
+    setLoading(true);
+
+    try {
+      const supabase = createClient();
+      const { error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: name,
+          },
+        },
+      });
+
+      if (signUpError) {
+        setError(signUpError.message);
+        return;
+      }
+
+      setSuccess(true);
+    } catch {
+      setError("Une erreur est survenue. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (success) {
@@ -50,8 +77,8 @@ export default function RegisterForm() {
         <label htmlFor="reg-password" className="block text-sm font-medium text-text-dark mb-1">Mot de passe</label>
         <input id="reg-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-3 rounded-xl border-2 border-primary-light/30 bg-white/80 text-text-dark focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-colors" placeholder="6 caractères minimum" />
       </div>
-      <button type="submit" className="w-full px-6 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-accent transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none">
-        Créer mon compte
+      <button type="submit" disabled={loading} className="w-full px-6 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-accent transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed">
+        {loading ? "Création en cours..." : "Créer mon compte"}
       </button>
       <p className="text-center text-text-muted text-sm">
         Déjà un compte ? <Link href="/connexion" className="text-primary hover:text-accent transition-colors cursor-pointer">Se connecter</Link>

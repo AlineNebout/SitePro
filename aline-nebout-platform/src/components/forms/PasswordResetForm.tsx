@@ -2,21 +2,40 @@
 
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 
 export default function PasswordResetForm() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError("");
+
     if (!email) {
       setError("L'email est requis");
       return;
     }
-    // TODO: Supabase auth password reset
-    setSuccess(true);
+
+    setLoading(true);
+
+    try {
+      const supabase = createClient();
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email);
+
+      if (resetError) {
+        setError(resetError.message);
+        return;
+      }
+
+      setSuccess(true);
+    } catch {
+      setError("Une erreur est survenue. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (success) {
@@ -36,8 +55,8 @@ export default function PasswordResetForm() {
         <label htmlFor="reset-email" className="block text-sm font-medium text-text-dark mb-1">Email</label>
         <input id="reset-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-3 rounded-xl border-2 border-primary-light/30 bg-white/80 text-text-dark focus:ring-2 focus:ring-accent focus:border-accent focus:outline-none transition-colors" placeholder="votre@email.com" />
       </div>
-      <button type="submit" className="w-full px-6 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-accent transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none">
-        Réinitialiser le mot de passe
+      <button type="submit" disabled={loading} className="w-full px-6 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-accent transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed">
+        {loading ? "Envoi en cours..." : "Réinitialiser le mot de passe"}
       </button>
       <p className="text-center text-text-muted text-sm">
         <Link href="/connexion" className="text-primary hover:text-accent transition-colors cursor-pointer">Retour à la connexion</Link>
