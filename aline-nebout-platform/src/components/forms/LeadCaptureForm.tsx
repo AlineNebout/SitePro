@@ -6,11 +6,35 @@ export default function LeadCaptureForm() {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (email && consent) {
-      setSubmitted(true);
+    if (!email || !consent) return;
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/lead-capture", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "parent_guide" }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Une erreur est survenue. Veuillez réessayer.");
+        return;
+      }
+      if (data.success) {
+        setSubmitted(true);
+      }
+    } catch {
+      setError("Impossible de contacter le serveur. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -62,15 +86,18 @@ export default function LeadCaptureForm() {
           RGPD et ne seront jamais partagées.
         </span>
       </label>
+      {error && (
+        <p className="text-red-500 text-sm text-center" role="alert">{error}</p>
+      )}
       <button
         type="submit"
-        disabled={!email || !consent}
+        disabled={!email || !consent || loading}
         className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-accent text-white font-semibold hover:bg-accent-dark shadow-lg shadow-accent/20 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
         </svg>
-        Télécharger le guide gratuit
+        {loading ? "Envoi en cours..." : "Télécharger le guide gratuit"}
       </button>
     </form>
   );

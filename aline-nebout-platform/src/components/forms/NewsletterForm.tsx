@@ -10,11 +10,39 @@ export default function NewsletterForm({ variant }: NewsletterFormProps) {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (email && consent) {
-      setSubmitted(true);
+    if (!email || !consent) return;
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, gdprConsent: consent }),
+      });
+      const data = await res.json();
+
+      if (data.error === "already_subscribed") {
+        setError("Vous êtes déjà inscrit(e) à la newsletter.");
+        return;
+      }
+      if (!res.ok) {
+        setError(data.error || "Une erreur est survenue. Veuillez réessayer.");
+        return;
+      }
+      if (data.success) {
+        setSubmitted(true);
+      }
+    } catch {
+      setError("Impossible de contacter le serveur. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -56,12 +84,15 @@ export default function NewsletterForm({ variant }: NewsletterFormProps) {
           />
           <button
             type="submit"
-            disabled={!email || !consent}
+            disabled={!email || !consent || loading}
             className="px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-accent shadow-md shadow-primary/20 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
           >
-            S&apos;inscrire
+            {loading ? "..." : "S'inscrire"}
           </button>
         </div>
+        {error && (
+          <p className="text-red-500 text-xs" role="alert">{error}</p>
+        )}
         <label className="flex items-start gap-2 cursor-pointer">
           <input
             type="checkbox"
@@ -130,9 +161,12 @@ export default function NewsletterForm({ variant }: NewsletterFormProps) {
             J&apos;accepte de recevoir la newsletter. Conformément au RGPD, mes données ne seront jamais partagées.
           </span>
         </label>
+        {error && (
+          <p className="text-red-500 text-sm text-center" role="alert">{error}</p>
+        )}
         <button
           type="submit"
-          disabled={!email || !consent}
+          disabled={!email || !consent || loading}
           className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-accent shadow-lg shadow-primary/20 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <svg
@@ -149,7 +183,7 @@ export default function NewsletterForm({ variant }: NewsletterFormProps) {
               d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
             />
           </svg>
-          S&apos;inscrire à la newsletter
+          {loading ? "Inscription en cours..." : "S'inscrire à la newsletter"}
         </button>
       </form>
     </div>

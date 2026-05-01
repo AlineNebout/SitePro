@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import WorkshopRegistrationForm from "@/components/forms/WorkshopRegistrationForm";
 
 interface WorkshopCardProps {
+  workshopId: string;
   date: string;
   time: string;
   location: string;
@@ -13,6 +14,7 @@ interface WorkshopCardProps {
 }
 
 export default function WorkshopCard({
+  workshopId,
   date,
   time,
   location,
@@ -194,6 +196,7 @@ export default function WorkshopCard({
                 </button>
               </div>
               <WorkshopRegistrationForm
+                workshopId={workshopId}
                 workshopDate={date}
                 onSuccess={handleSuccess}
               />

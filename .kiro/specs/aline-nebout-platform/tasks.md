@@ -114,13 +114,13 @@
   - [x] 13.7 Add contact numbers (cabinet + mobile 06 15 97 36 09)
   - [x] 13.8 Add CTA to workshop calendar + CTA to create coaching account
 
-- [ ] 14. Build Workshop registration system
-  - [ ] 14.1 Create SQL migration for `workshops`, `workshop_bookings`, `workshop_waitlist` tables
+- [-] 14. Build Workshop registration system
+  - [x] 14.1 Create SQL migration for `workshops`, `workshop_bookings`, `workshop_waitlist` tables
   - [x] 14.2 Create `app/(public)/coaching/ateliers/page.tsx` (workshop calendar)
   - [x] 14.3 Build `WorkshopRegistrationForm` component (name, email, phone, message)
-  - [ ] 14.4 Create API route `app/api/workshops/route.ts` (list workshops)
-  - [ ] 14.5 Create API route `app/api/workshops/[id]/register/route.ts` (register + capacity check)
-  - [ ] 14.6 Create API route `app/api/workshops/[id]/cancel/route.ts` (cancel + waitlist promotion)
+  - [x] 14.4 Create API route `app/api/workshops/route.ts` (list workshops)
+  - [x] 14.5 Create API route `app/api/workshops/[id]/register/route.ts` (register + capacity check)
+  - [x] 14.6 Create API route `app/api/workshops/[id]/cancel/route.ts` (cancel + waitlist promotion)
   - [x] 14.7 Implement capacity display (remaining spots, "Complet" status, waitlist option)
   - [ ] 14.8 Send confirmation email on registration (Supabase Edge Function + Resend/Brevo)
   - [ ] 14.9 Send reminder email 24h before workshop
@@ -192,8 +192,8 @@
 ## Phase 9: Blog, Newsletter & Content Marketing
 
 - [ ] 23. Build Blog system
-  - [ ] 23.1 Create `app/(public)/blog/page.tsx` (blog index with category filter)
-  - [ ] 23.2 Create `app/(public)/blog/[slug]/page.tsx` (blog article page)
+  - [x] 23.1 Create `app/(public)/blog/page.tsx` (blog index with category filter)
+  - [x] 23.2 Create `app/(public)/blog/[slug]/page.tsx` (blog article page)
   - [ ] 23.3 Add JSON-LD Article structured data on each blog article
   - [ ] 23.4 Add related articles section (same category, max 3 — Property 14)
   - [ ] 23.5 Add CTA at bottom (Doctolib or coaching sign-up based on category)
@@ -207,16 +207,16 @@
 
 ## Phase 10: Admin Panel
 
-- [ ] 25. Build Admin dashboard and management
-  - [ ] 25.1 Create `app/(admin)/admin/page.tsx` (dashboard with summary cards — Property 16)
-  - [ ] 25.2 Create `app/(admin)/admin/ateliers/page.tsx` (workshop CRUD + registrant list)
-  - [ ] 25.3 Create `app/(admin)/admin/locations/page.tsx` (rental CRUD + inquiry management)
-  - [ ] 25.4 Create `app/(admin)/admin/praticiens/page.tsx` (practitioner invite + management)
-  - [ ] 25.5 Create `app/(admin)/admin/communaute/page.tsx` (moderation: pin, delete, manage access)
-  - [ ] 25.6 Create `app/(admin)/admin/blog/page.tsx` (blog article CRUD)
-  - [ ] 25.7 Create `app/(admin)/admin/temoignages/page.tsx` (testimonial CRUD)
-  - [ ] 25.8 Create `app/(admin)/admin/newsletter/page.tsx` (subscriber list)
-  - [ ] 25.9 Apply admin role guard on all /admin routes (Property 15)
+- [x] 25. Build Admin dashboard and management
+  - [x] 25.1 Create `app/(admin)/admin/page.tsx` (dashboard with summary cards — Property 16)
+  - [x] 25.2 Create `app/(admin)/admin/ateliers/page.tsx` (workshop CRUD + registrant list)
+  - [x] 25.3 Create `app/(admin)/admin/locations/page.tsx` (rental CRUD + inquiry management)
+  - [x] 25.4 Create `app/(admin)/admin/praticiens/page.tsx` (practitioner invite + management)
+  - [x] 25.5 Create `app/(admin)/admin/communaute/page.tsx` (moderation: pin, delete, manage access)
+  - [x] 25.6 Create `app/(admin)/admin/blog/page.tsx` (blog article CRUD)
+  - [x] 25.7 Create `app/(admin)/admin/temoignages/page.tsx` (testimonial CRUD)
+  - [x] 25.8 Create `app/(admin)/admin/newsletter/page.tsx` (subscriber list)
+  - [x] 25.9 Apply admin role guard on all /admin routes (Property 15)
 
 ## Phase 11: SEO, Social & Legal
 

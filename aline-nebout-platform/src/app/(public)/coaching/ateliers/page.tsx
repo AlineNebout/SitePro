@@ -3,6 +3,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import ScrollReveal from "@/components/animation/ScrollReveal";
 import WorkshopList from "@/components/sections/WorkshopList";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Ateliers Foulée",
@@ -15,55 +16,46 @@ export const metadata: Metadata = {
   },
 };
 
-const workshops = [
-  {
-    id: "2025-04-09",
-    date: "09/04/2025",
-    dayLabel: "Jeudi 09 avril",
-    time: "18h20",
-    location: "Esplanade de l'écluse, Rochetaillée",
-    spotsTotal: 12,
-    spotsTaken: 4,
-  },
-  {
-    id: "2025-04-22",
-    date: "22/04/2025",
-    dayLabel: "Mardi 22 avril",
-    time: "18h20",
-    location: "Esplanade de l'écluse, Rochetaillée",
-    spotsTotal: 12,
-    spotsTaken: 7,
-  },
-  {
-    id: "2025-05-21",
-    date: "21/05/2025",
-    dayLabel: "Mercredi 21 mai",
-    time: "18h20",
-    location: "Esplanade de l'écluse, Rochetaillée",
-    spotsTotal: 12,
-    spotsTaken: 2,
-  },
-  {
-    id: "2025-05-26",
-    date: "26/05/2025",
-    dayLabel: "Lundi 26 mai",
-    time: "18h20",
-    location: "Esplanade de l'écluse, Rochetaillée",
-    spotsTotal: 12,
-    spotsTaken: 12,
-  },
-  {
-    id: "2025-06-22",
-    date: "22/06/2025",
-    dayLabel: "Dimanche 22 juin",
-    time: "18h20",
-    location: "Esplanade de l'écluse, Rochetaillée",
-    spotsTotal: 12,
-    spotsTaken: 0,
-  },
-];
+function formatDayLabel(dateStr: string): string {
+  const date = new Date(dateStr + "T00:00:00");
+  const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+  const months = [
+    "janvier", "février", "mars", "avril", "mai", "juin",
+    "juillet", "août", "septembre", "octobre", "novembre", "décembre",
+  ];
+  const dayName = days[date.getDay()];
+  const dayNum = String(date.getDate()).padStart(2, "0");
+  const monthName = months[date.getMonth()];
+  return `${dayName} ${dayNum} ${monthName}`;
+}
 
-export default function AteliersPage() {
+function formatDate(dateStr: string): string {
+  const date = new Date(dateStr + "T00:00:00");
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+export default async function AteliersPage() {
+  const supabase = await createClient();
+
+  const { data: rawWorkshops } = await supabase
+    .from("workshops")
+    .select("id, date, time_display, location, max_capacity, current_count, status")
+    .in("status", ["upcoming", "full"])
+    .order("date", { ascending: true });
+
+  const workshops = (rawWorkshops ?? []).map((w) => ({
+    id: w.id,
+    date: formatDate(w.date),
+    dayLabel: formatDayLabel(w.date),
+    time: w.time_display ?? "18h20",
+    location: w.location ?? "Esplanade de l\u2019écluse, Rochetaillée",
+    spotsTotal: w.max_capacity ?? 12,
+    spotsTaken: w.current_count ?? 0,
+  }));
+
   return (
     <div className="pt-28 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">

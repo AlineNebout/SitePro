@@ -66,6 +66,8 @@ export default function SchoolContactForm() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
   const [touched, setTouched] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
 
   function handleChange(field: keyof FormData, value: string) {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -81,14 +83,50 @@ export default function SchoolContactForm() {
     setErrors((prev) => ({ ...prev, [field]: newErrors[field] }));
   }
 
-  function handleSubmit(e: FormEvent) {
+  // Map form requestType values to API-expected values
+  const requestTypeMap: Record<string, string> = {
+    information: "information_session",
+    atelier: "workshop",
+    depistage: "screening",
+  };
+
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const newErrors = validateForm(formData);
     setErrors(newErrors);
     setTouched(new Set(Object.keys(formData)));
 
-    if (Object.keys(newErrors).length === 0) {
-      setSubmitted(true);
+    if (Object.keys(newErrors).length > 0) return;
+
+    setLoading(true);
+    setApiError("");
+
+    try {
+      const res = await fetch("/api/contact/school", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          schoolName: formData.schoolName,
+          contactName: formData.contactPerson,
+          email: formData.email,
+          phone: formData.phone || undefined,
+          requestType: requestTypeMap[formData.requestType] || formData.requestType,
+          message: formData.message,
+        }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setApiError(data.error || "Une erreur est survenue. Veuillez réessayer.");
+        return;
+      }
+      if (data.success) {
+        setSubmitted(true);
+      }
+    } catch {
+      setApiError("Impossible de contacter le serveur. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -241,14 +279,19 @@ export default function SchoolContactForm() {
         )}
       </div>
 
+      {apiError && (
+        <p className="text-red-500 text-sm" role="alert">{apiError}</p>
+      )}
+
       <button
         type="submit"
-        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-accent shadow-lg shadow-primary/20 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+        disabled={loading}
+        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-accent shadow-lg shadow-primary/20 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
         </svg>
-        Envoyer la demande
+        {loading ? "Envoi en cours..." : "Envoyer la demande"}
       </button>
     </form>
   );
