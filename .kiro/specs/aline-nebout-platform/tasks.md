@@ -240,23 +240,23 @@
 
 ## Phase 12: Testing & Performance
 
-- [ ] 29. Write property-based tests
-  - [ ] 29.1 Install Vitest + fast-check + React Testing Library
-  - [ ] 29.2 Write PBT for workshop booking capacity invariant (Property 7)
-  - [ ] 29.3 Write PBT for cancellation + waitlist promotion (Property 8)
-  - [ ] 29.4 Write PBT for exercise completion percentage (Property 9)
-  - [ ] 29.5 Write PBT for self-assessment threshold (Property 4)
-  - [ ] 29.6 Write PBT for collection filter/sort correctness (Property 3)
-  - [ ] 29.7 Write PBT for role-based access control (Property 15)
-  - [ ] 29.8 Write PBT for auth error message safety (Property 6)
-  - [ ] 29.9 Write PBT for RLS data isolation (Property 12)
+- [x] 29. Write property-based tests
+  - [x] 29.1 Install Vitest + fast-check + React Testing Library
+  - [x] 29.2 Write PBT for workshop booking capacity invariant (Property 7)
+  - [x] 29.3 Write PBT for cancellation + waitlist promotion (Property 8)
+  - [x] 29.4 Write PBT for exercise completion percentage (Property 9)
+  - [x] 29.5 Write PBT for self-assessment threshold (Property 4)
+  - [x] 29.6 Write PBT for collection filter/sort correctness (Property 3)
+  - [x] 29.7 Write PBT for role-based access control (Property 15)
+  - [x] 29.8 Write PBT for auth error message safety (Property 6)
+  - [x] 29.9 Write PBT for RLS data isolation (Property 12)
 
-- [ ] 30. Write E2E tests and optimize performance
-  - [ ] 30.1 Install Playwright
-  - [ ] 30.2 Write E2E: Visitor books osteopathy appointment (Landing → Specialty → Doctolib)
-  - [ ] 30.3 Write E2E: Parent self-assessment flow (Reflexes → Parents → Check → Book)
-  - [ ] 30.4 Write E2E: Workshop registration guest flow
-  - [ ] 30.5 Write E2E: Coaching user journey (Register → Login → Dashboard → Exercises → Progress)
-  - [ ] 30.6 Run Lighthouse CI on all public pages (target ≥ 90)
-  - [ ] 30.7 Verify 3D scenes LCP < 2.5s on throttled 4G
-  - [ ] 30.8 Run bundle analysis to verify 3D code-splitting
+- [x] 30. Write E2E tests and optimize performance
+  - [x] 30.1 Install Playwright
+  - [x] 30.2 Write E2E: Visitor books osteopathy appointment (Landing → Specialty → Doctolib)
+  - [x] 30.3 Write E2E: Parent self-assessment flow (Reflexes → Parents → Check → Book)
+  - [x] 30.4 Write E2E: Workshop registration guest flow
+  - [x] 30.5 Write E2E: Coaching user journey (Register → Login → Dashboard → Exercises → Progress)
+  - [x] 30.6 Run Lighthouse CI on all public pages (target ≥ 90)
+  - [x] 30.7 Verify 3D scenes LCP < 2.5s on throttled 4G
+  - [x] 30.8 Run bundle analysis to verify 3D code-splitting
