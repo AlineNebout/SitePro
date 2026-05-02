@@ -7,7 +7,7 @@ import PractitionerFilter from "@/components/content/PractitionerFilter";
 export const metadata: Metadata = {
   title: "Pôle Santé de Rochetaillée-sur-Saône",
   description:
-    "Le Pôle Santé de Rochetaillée-sur-Saône regroupe des professionnels de santé et du social : ostéopathe, orthophoniste, infirmiers, sage-femme, éducatrice spécialisée.",
+    "Le Pôle Santé de Rochetaillée-sur-Saône regroupe des professionnels de santé et du social : ostéopathe, orthophoniste, infirmiers, éducatrice spécialisée.",
 };
 
 const practitioners = [
@@ -45,14 +45,6 @@ const practitioners = [
     description:
       "Accompagnement éducatif et social des enfants et adultes en situation de handicap ou de difficulté. Au Pôle Santé depuis 2024.",
     slug: "tiffany-charry",
-  },
-  {
-    name: "Sophie Pierre",
-    profession: "Sage-femme",
-    description:
-      "Suivi de grossesse, préparation à la naissance, rééducation périnéale et accompagnement post-partum.",
-    slug: "sophie-pierre",
-    location: "Fontaines-sur-Saône (partenaire)",
   },
 ];
 

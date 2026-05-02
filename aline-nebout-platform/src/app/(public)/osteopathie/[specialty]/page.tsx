@@ -56,7 +56,6 @@ const specialties: Record<string, SpecialtyData> = {
     description: [
       "La grossesse entraîne d'importantes modifications morphologiques et physiologiques. Le corps de la femme enceinte s'adapte en permanence pour accueillir bébé, ce qui peut générer des douleurs articulaires, des lombalgies, des sciatiques, des troubles digestifs, circulatoires ou nerveux. L'ostéopathie permet d'accompagner ces transformations en douceur et de soulager les inconforts liés à chaque trimestre.",
       "Aline Nebout propose également un travail de préparation à l'accouchement axé sur la liberté du bassin. En libérant les tensions du bassin, du périnée et du diaphragme, l'ostéopathie favorise un accouchement plus physiologique. Après la naissance, un bilan post-accouchement est recommandé pour vérifier l'équilibre du bassin et accompagner la reprise du corps, y compris en cas de difficultés d'allaitement.",
-      "Aline travaille en étroite collaboration avec Sophie Pierre, sage-femme à Fontaines-sur-Saône, pour offrir un suivi complémentaire et cohérent tout au long de la grossesse et du post-partum.",
     ],
     indications: [
       "Douleurs lombaires et sciatiques de grossesse",
@@ -69,7 +68,7 @@ const specialties: Record<string, SpecialtyData> = {
       "Difficultés d'allaitement",
     ],
     treatmentApproach:
-      "Les techniques utilisées sont exclusivement douces et adaptées à la grossesse. Aline travaille sur le bassin, le diaphragme, la colonne vertébrale et les viscères pour soulager les tensions et préparer le corps à l'accouchement. La collaboration avec Sophie Pierre, sage-femme, permet un accompagnement global et personnalisé.",
+      "Les techniques utilisées sont exclusivement douces et adaptées à la grossesse. Aline travaille sur le bassin, le diaphragme, la colonne vertébrale et les viscères pour soulager les tensions et préparer le corps à l'accouchement. L'approche pluridisciplinaire du Pôle Santé permet un accompagnement global et personnalisé.",
   },
   "nourrisson-enfant": {
     title: "Nourrisson & enfant",

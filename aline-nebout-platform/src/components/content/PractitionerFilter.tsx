@@ -20,7 +20,6 @@ const FILTERS = [
   { key: "Ostéopathe", label: "Ostéopathe" },
   { key: "Orthophoniste", label: "Orthophoniste" },
   { key: "Infirmier", label: "Infirmier" },
-  { key: "Sage-femme", label: "Sage-femme" },
   { key: "Éducatrice", label: "Éducatrice" },
 ];
 

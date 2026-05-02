@@ -25,11 +25,6 @@ const timeline = [
 
 const team = [
   {
-    name: "Sophie Pierre",
-    role: "Sage-femme",
-    location: "Fontaines-sur-Saône",
-  },
-  {
     name: "Marion Grosdemange",
     role: "Orthophoniste",
     location: null,

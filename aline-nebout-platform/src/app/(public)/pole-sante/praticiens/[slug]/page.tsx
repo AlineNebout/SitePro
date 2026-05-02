@@ -56,31 +56,6 @@ const practitioners: Record<string, PractitionerData> = {
     website: null,
     doctolibUrl: "https://www.doctolib.fr/osteopathe/rochetaillee-sur-saone/aline-nebout",
   },
-  "sophie-pierre": {
-    name: "Sophie Pierre",
-    slug: "sophie-pierre",
-    profession: "Sage-femme",
-    metaDescription:
-      "Sophie Pierre, sage-femme à Fontaines-sur-Saône, partenaire du Pôle Santé de Rochetaillée-sur-Saône. Suivi de grossesse, préparation à la naissance, rééducation périnéale.",
-    description: [
-      "Sophie Pierre est sage-femme libérale installée à Fontaines-sur-Saône. Elle accompagne les femmes tout au long de leur parcours de maternité : suivi de grossesse, préparation à la naissance, accompagnement à l'accouchement, suivi post-partum et rééducation périnéale.",
-      "Partenaire du Pôle Santé de Rochetaillée-sur-Saône, Sophie travaille en étroite collaboration avec Aline Nebout pour offrir un suivi complémentaire et cohérent aux futures et jeunes mamans. Cette approche pluridisciplinaire permet un accompagnement global, de la grossesse aux premiers mois de vie du bébé.",
-    ],
-    specialties: [
-      "Suivi de grossesse",
-      "Préparation à la naissance",
-      "Accompagnement post-partum",
-      "Rééducation périnéale",
-      "Conseils en allaitement",
-      "Suivi gynécologique de prévention",
-    ],
-    contact: {
-      location: "Fontaines-sur-Saône (partenaire du Pôle Santé)",
-    },
-    hasDoctolib: false,
-    website: null,
-    doctolibUrl: null,
-  },
   "marion-grosdemange": {
     name: "Marion Grosdemange",
     slug: "marion-grosdemange",
@@ -185,7 +160,6 @@ const practitioners: Record<string, PractitionerData> = {
 
 const slugs = [
   "aline-nebout",
-  "sophie-pierre",
   "marion-grosdemange",
   "charles-porot",
   "clementine-lyonnet",

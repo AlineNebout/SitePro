@@ -28,9 +28,9 @@ const posts = [
   },
   {
     id: 3,
-    author: "Sophie Pierre",
-    profession: "Sage-femme",
-    content: "Atelier allaitement le 15 juin à Fontaines-sur-Saône — il reste des places. Si vous êtes intéressée ou connaissez quelqu'un, n'hésitez pas à partager.",
+    author: "Tiffany Charry",
+    profession: "Éducatrice spécialisée",
+    content: "Nouveau groupe de soutien à la parentalité le mardi après-midi au Pôle Santé. Ouvert à tous les parents, sur inscription. N'hésitez pas à en parler autour de vous.",
     category: "Événement",
     date: "12 mars 2025",
     pinned: false,

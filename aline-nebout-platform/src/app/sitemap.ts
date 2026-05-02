@@ -7,7 +7,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const practitionerSlugs = [
     "aline-nebout",
-    "sophie-pierre",
     "marion-grosdemange",
     "charles-porot",
     "clementine-lyonnet",

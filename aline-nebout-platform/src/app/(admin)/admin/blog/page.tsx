@@ -80,6 +80,13 @@ export default function AdminBlogPage() {
   const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
+  // AI generation state
+  const [showAIModal, setShowAIModal] = useState(false);
+  const [aiTopic, setAiTopic] = useState("");
+  const [aiCategory, setAiCategory] = useState("osteopathie");
+  const [aiGenerating, setAiGenerating] = useState(false);
+  const [aiError, setAiError] = useState("");
+
   async function fetchArticles() {
     setLoading(true);
     setError("");
@@ -168,6 +175,53 @@ export default function AdminBlogPage() {
 
   const publishedCount = articles.filter((a) => a.is_published).length;
 
+  async function handleAIGenerate(e: FormEvent) {
+    e.preventDefault();
+    if (!aiTopic.trim()) {
+      setAiError("Veuillez saisir un sujet.");
+      return;
+    }
+
+    setAiGenerating(true);
+    setAiError("");
+
+    try {
+      const res = await fetch("/api/blog/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ topic: aiTopic.trim(), category: aiCategory }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        setAiError(data.error || "Erreur lors de la génération.");
+        return;
+      }
+
+      const data = await res.json();
+      const article = data.article;
+
+      // Pre-fill the create form with generated content
+      setCreateFormData({
+        title: article.title,
+        slug: article.slug,
+        excerpt: article.excerpt,
+        content: article.content,
+        category: article.category,
+        isPublished: false,
+      });
+
+      setShowAIModal(false);
+      setShowCreateForm(true);
+      setAiTopic("");
+      setAiCategory("osteopathie");
+    } catch {
+      setAiError("Impossible de contacter le serveur.");
+    } finally {
+      setAiGenerating(false);
+    }
+  }
+
   const inputBase =
     "w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-text-dark text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary focus:outline-none transition-colors";
 
@@ -184,11 +238,22 @@ export default function AdminBlogPage() {
               : `${articles.length} article${articles.length !== 1 ? "s" : ""} · ${publishedCount} publié${publishedCount !== 1 ? "s" : ""}`}
           </p>
         </div>
-        <button
-          type="button"
-          onClick={() => setShowCreateForm(!showCreateForm)}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-accent shadow-md shadow-primary/20 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
-        >
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setShowAIModal(true)}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border-2 border-primary text-primary text-sm font-semibold hover:bg-primary hover:text-white shadow-sm transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+            </svg>
+            Générer avec l&apos;IA
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowCreateForm(!showCreateForm)}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-accent shadow-md shadow-primary/20 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+          >
           {showCreateForm ? (
             <>
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
@@ -204,8 +269,101 @@ export default function AdminBlogPage() {
               Nouvel article
             </>
           )}
-        </button>
+          </button>
+        </div>
       </div>
+
+      {/* AI Generation Modal */}
+      <AnimatePresence>
+        {showAIModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+            onClick={() => setShowAIModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="bg-white rounded-2xl p-6 sm:p-8 shadow-xl max-w-md w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 className="font-heading text-lg text-text-dark">Assistant IA</h2>
+                  <p className="text-text-muted text-xs">Générer un brouillon d&apos;article</p>
+                </div>
+              </div>
+
+              <form onSubmit={handleAIGenerate} className="space-y-4">
+                <div>
+                  <label htmlFor="ai-topic" className="block text-sm font-medium text-text-dark mb-1">
+                    Sujet / thème <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="ai-topic"
+                    type="text"
+                    value={aiTopic}
+                    onChange={(e) => setAiTopic(e.target.value)}
+                    className={inputBase}
+                    placeholder="Ex : les bienfaits de l'ostéopathie pendant la grossesse"
+                    required
+                    autoFocus
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="ai-category" className="block text-sm font-medium text-text-dark mb-1">
+                    Catégorie <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    id="ai-category"
+                    value={aiCategory}
+                    onChange={(e) => setAiCategory(e.target.value)}
+                    className={`${inputBase} cursor-pointer`}
+                  >
+                    <option value="osteopathie">Ostéopathie</option>
+                    <option value="reflexes">Réflexes Archaïques</option>
+                    <option value="coaching">Coaching Foulée</option>
+                  </select>
+                </div>
+
+                {aiError && (
+                  <p className="text-red-500 text-sm" role="alert">{aiError}</p>
+                )}
+
+                <div className="flex items-center gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowAIModal(false)}
+                    className="flex-1 px-4 py-2.5 rounded-xl text-text-muted text-sm font-medium hover:bg-gray-100 transition-colors cursor-pointer"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={aiGenerating}
+                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-accent shadow-sm transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                    </svg>
+                    {aiGenerating ? "Génération..." : "Générer"}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Create article form */}
       <AnimatePresence>
