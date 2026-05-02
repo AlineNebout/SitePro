@@ -59,7 +59,15 @@ const articles = [
   },
 ];
 
-export default function ArticlesPage() {
+export default async function ArticlesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ sphere?: string }>;
+}) {
+  const { sphere } = await searchParams;
+  const validSpheres = ["motor", "emotional", "cognitive"];
+  const initialFilter = sphere && validSpheres.includes(sphere) ? sphere : undefined;
+
   return (
     <>
       {/* Header */}
@@ -95,7 +103,7 @@ export default function ArticlesPage() {
       {/* Articles with filter */}
       <section className="px-4 sm:px-6 lg:px-8 pb-20">
         <div className="max-w-6xl mx-auto">
-          <ReflexArticleFilter articles={articles} />
+          <ReflexArticleFilter articles={articles} initialFilter={initialFilter} />
         </div>
       </section>
     </>

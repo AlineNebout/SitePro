@@ -12,6 +12,7 @@ interface ReflexArticle {
 
 interface ReflexArticleFilterProps {
   articles: ReflexArticle[];
+  initialFilter?: string;
 }
 
 const FILTERS = [
@@ -33,8 +34,8 @@ const SPHERE_LABELS: Record<string, string> = {
   cognitive: "Cognitif",
 };
 
-export default function ReflexArticleFilter({ articles }: ReflexArticleFilterProps) {
-  const [activeFilter, setActiveFilter] = useState("all");
+export default function ReflexArticleFilter({ articles, initialFilter }: ReflexArticleFilterProps) {
+  const [activeFilter, setActiveFilter] = useState(initialFilter || "all");
 
   const filtered =
     activeFilter === "all"

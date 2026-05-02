@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import DoctolibButton from "@/components/booking/DoctolibButton";
 
 const sphereData = [
-  { label: "Moteur", color: "bg-primary", glowColor: "from-primary/30" },
-  { label: "Émotionnel", color: "bg-accent", glowColor: "from-accent/30" },
-  { label: "Cognitif", color: "bg-[#10B981]", glowColor: "from-[#10B981]/30" },
+  { label: "Moteur", color: "bg-primary", glowColor: "from-primary/30", sphere: "motor" },
+  { label: "Émotionnel", color: "bg-accent", glowColor: "from-accent/30", sphere: "emotional" },
+  { label: "Cognitif", color: "bg-[#10B981]", glowColor: "from-[#10B981]/30", sphere: "cognitive" },
 ];
 
 export default function ReflexesHero() {
@@ -122,22 +123,26 @@ export default function ReflexesHero() {
                     initial={{ opacity: 0, x: 30 }}
                     animate={isLoaded ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.6, delay: 0.8 + i * 0.15 }}
-                    className="bg-white/70 backdrop-blur-md rounded-2xl p-5 shadow-lg border border-white/50 flex items-center gap-4"
                   >
-                    <div className={`w-12 h-12 rounded-xl ${sphere.color}/15 flex items-center justify-center`}>
-                      <div className={`w-4 h-4 rounded-full ${sphere.color}`} />
-                    </div>
-                    <div>
-                      <p className="font-heading text-base text-text-dark">Sphère {sphere.label.toLowerCase()}</p>
-                      <p className="text-xs text-text-muted">
-                        {sphere.label === "Moteur" && "Coordination, posture, écriture"}
-                        {sphere.label === "Émotionnel" && "Stress, anxiété, hypersensibilité"}
-                        {sphere.label === "Cognitif" && "Concentration, apprentissage, mémoire"}
-                      </p>
-                    </div>
-                    <svg className="w-5 h-5 text-text-muted/40 ml-auto" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                    </svg>
+                    <Link
+                      href={`/reflexes/articles?sphere=${sphere.sphere}`}
+                      className="bg-white/70 backdrop-blur-md rounded-2xl p-5 shadow-lg border border-white/50 flex items-center gap-4 hover:shadow-xl hover:bg-white/90 hover:border-primary/20 transition-all duration-300 cursor-pointer group focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+                    >
+                      <div className={`w-12 h-12 rounded-xl ${sphere.color}/15 flex items-center justify-center`}>
+                        <div className={`w-4 h-4 rounded-full ${sphere.color}`} />
+                      </div>
+                      <div>
+                        <p className="font-heading text-base text-text-dark group-hover:text-primary transition-colors duration-200">Sphère {sphere.label.toLowerCase()}</p>
+                        <p className="text-xs text-text-muted">
+                          {sphere.label === "Moteur" && "Coordination, posture, écriture"}
+                          {sphere.label === "Émotionnel" && "Stress, anxiété, hypersensibilité"}
+                          {sphere.label === "Cognitif" && "Concentration, apprentissage, mémoire"}
+                        </p>
+                      </div>
+                      <svg className="w-5 h-5 text-text-muted/40 ml-auto group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </Link>
                   </motion.div>
                 ))}
               </div>
