@@ -93,14 +93,14 @@
   - [x] 11.3 Create API route `app/api/contact/route.ts` (store inquiry + email notification)
   - [x] 11.4 Add intervention descriptions (info sessions, workshops, screening)
 
-- [ ] 12. Build Reflex article pages
+- [x] 12. Build Reflex article pages
   - [x] 12.1 Create `app/(public)/reflexes/articles/page.tsx` (article index with sphere filtering)
   - [x] 12.2 Create `app/(public)/reflexes/articles/[slug]/page.tsx` (individual article)
   - [x] 12.3 Seed reflex article data in Supabase (Moro, Galant, RTAC, RTSC, Grasping, Babinski)
-  - [ ] 12.4 Implement sphere filter (motor, emotional, cognitive tags)
-  - [ ] 12.5 Add prev/next article navigation
-  - [ ] 12.6 Add breadcrumb (Home > Réflexes Archaïques > [Reflex Name])
-  - [ ] 12.7 Add booking CTA at bottom of each article
+  - [x] 12.4 Implement sphere filter (motor, emotional, cognitive tags)
+  - [x] 12.5 Add prev/next article navigation
+  - [x] 12.6 Add breadcrumb (Home > Réflexes Archaïques > [Reflex Name])
+  - [x] 12.7 Add booking CTA at bottom of each article
 
 ## Phase 5: Coaching Foulée Universe
 
@@ -191,10 +191,10 @@
 
 ## Phase 9: Blog, Newsletter & Content Marketing
 
-- [ ] 23. Build Blog system
+- [x] 23. Build Blog system
   - [x] 23.1 Create `app/(public)/blog/page.tsx` (blog index with category filter)
   - [x] 23.2 Create `app/(public)/blog/[slug]/page.tsx` (blog article page)
-  - [ ] 23.3 Add JSON-LD Article structured data on each blog article
+  - [x] 23.3 Add JSON-LD Article structured data on each blog article
   - [x] 23.4 Add related articles section (same category, max 3 — Property 14)
   - [x] 23.5 Add CTA at bottom (Doctolib or coaching sign-up based on category)
 
@@ -220,23 +220,23 @@
 
 ## Phase 11: SEO, Social & Legal
 
-- [ ] 26. Implement SEO and social sharing
-  - [ ] 26.1 Add meta tags (title, description, Open Graph, Twitter Card) on all public pages (Property 11)
-  - [ ] 26.2 Create branded og:image cards (1200x630px) for each universe landing page
-  - [ ] 26.3 Add LocalBusiness JSON-LD structured data on osteopathy landing + contact pages
+- [x] 26. Implement SEO and social sharing
+  - [x] 26.1 Add meta tags (title, description, Open Graph, Twitter Card) on all public pages (Property 11)
+  - [x] 26.2 Create branded og:image cards (1200x630px) for each universe landing page
+  - [x] 26.3 Add LocalBusiness JSON-LD structured data on osteopathy landing + contact pages
   - [x] 26.4 Create `app/sitemap.ts` for dynamic sitemap generation
-  - [ ] 26.5 Add share buttons on reflex articles and blog articles (Facebook, LinkedIn, WhatsApp)
-  - [ ] 26.6 Add social profile links in footer (Instagram, Facebook, LinkedIn)
+  - [x] 26.5 Add share buttons on reflex articles and blog articles (Facebook, LinkedIn, WhatsApp)
+  - [x] 26.6 Add social profile links in footer (Instagram, Facebook, LinkedIn)
 
-- [ ] 27. Build Legal pages
+- [x] 27. Build Legal pages
   - [x] 27.1 Create `app/(public)/mentions-legales/page.tsx`
   - [x] 27.2 Create `app/(public)/politique-confidentialite/page.tsx`
-  - [ ] 27.3 Implement cookie consent logic (block analytics until accepted)
+  - [x] 27.3 Implement cookie consent logic (block analytics until accepted)
 
-- [ ] 28. Integrate analytics
-  - [ ] 28.1 Set up Umami (or Plausible) analytics
-  - [ ] 28.2 Track conversion events (Doctolib clicks, coaching sign-ups, newsletter, phone clicks)
-  - [ ] 28.3 Conditional loading after cookie consent
+- [x] 28. Integrate analytics
+  - [x] 28.1 Set up Umami (or Plausible) analytics
+  - [x] 28.2 Track conversion events (Doctolib clicks, coaching sign-ups, newsletter, phone clicks)
+  - [x] 28.3 Conditional loading after cookie consent
 
 ## Phase 12: Testing & Performance
 

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import DoctolibButton from "@/components/booking/DoctolibButton";
 import ScrollReveal from "@/components/animation/ScrollReveal";
+import ShareButtons from "@/components/content/ShareButtons";
 
 interface ReflexData {
   name: string;
@@ -335,6 +336,16 @@ export default async function ReflexArticlePage({ params }: PageProps) {
             </h2>
             <p className="text-text-muted leading-relaxed text-lg">{data.approach}</p>
           </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Share buttons */}
+      <section className="px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="max-w-3xl mx-auto">
+          <ShareButtons
+            url={`https://www.alinenebout-osteopathe.fr/reflexes/articles/${data.slug}`}
+            title={`Réflexe de ${data.name}`}
+          />
         </div>
       </section>
 

@@ -25,6 +25,7 @@ export default function DoctolibButton({
       href={DOCTOLIB_URL}
       target="_blank"
       rel="noopener noreferrer"
+      data-umami-event="doctolib-click"
       className={`${baseClasses} ${variantClasses} ${className}`}
     >
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">

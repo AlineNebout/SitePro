@@ -3,6 +3,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import DoctolibButton from "@/components/booking/DoctolibButton";
 import ScrollReveal from "@/components/animation/ScrollReveal";
+import LocalBusinessJsonLd from "@/components/seo/LocalBusinessJsonLd";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
+      <LocalBusinessJsonLd />
       {/* Header */}
       <section className="px-4 sm:px-6 lg:px-8 pt-8 pb-4">
         <div className="max-w-5xl mx-auto">
@@ -110,6 +112,7 @@ export default function ContactPage() {
                       Cabinet :{" "}
                       <a
                         href="tel:0478252862"
+                        data-umami-event="phone-click"
                         className="text-primary hover:text-accent transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded"
                       >
                         04 78 25 28 62
@@ -119,6 +122,7 @@ export default function ContactPage() {
                       Mobile :{" "}
                       <a
                         href="tel:0615973609"
+                        data-umami-event="phone-click"
                         className="text-primary hover:text-accent transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded"
                       >
                         06 15 97 36 09

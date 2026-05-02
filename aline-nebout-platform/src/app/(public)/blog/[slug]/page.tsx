@@ -5,6 +5,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import ScrollReveal from "@/components/animation/ScrollReveal";
 import { createClient } from "@/lib/supabase/server";
+import ShareButtons from "@/components/content/ShareButtons";
 
 interface BlogArticle {
   id: string;
@@ -115,8 +116,42 @@ export default async function BlogArticlePage({
     article.featured_image_url ||
     "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=450&fit=crop";
 
+  const BASE_URL = "https://www.alinenebout-osteopathe.fr";
+  const articleUrl = `${BASE_URL}/blog/${article.slug}`;
+  const publishedDate = article.published_at || article.created_at;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt || "",
+    datePublished: publishedDate,
+    dateModified: publishedDate,
+    author: {
+      "@type": "Person",
+      name: "Aline Nebout",
+      url: BASE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Aline Nebout — Ostéopathe D.O.",
+      url: BASE_URL,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": articleUrl,
+    },
+    ...(article.featured_image_url
+      ? { image: article.featured_image_url }
+      : {}),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <Breadcrumb
@@ -177,6 +212,16 @@ export default async function BlogArticlePage({
                   <p key={i}>{paragraph}</p>
                 ) : null
               )}
+            </div>
+          </ScrollReveal>
+
+          {/* Share buttons */}
+          <ScrollReveal delay={0.18}>
+            <div className="mb-12">
+              <ShareButtons
+                url={articleUrl}
+                title={article.title}
+              />
             </div>
           </ScrollReveal>
 

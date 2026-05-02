@@ -3,6 +3,7 @@ import ScrollReveal from "@/components/animation/ScrollReveal";
 import SpecialtyCard from "@/components/content/SpecialtyCard";
 import DoctolibButton from "@/components/booking/DoctolibButton";
 import OsteopathyHero from "@/components/sections/OsteopathyHero";
+import LocalBusinessJsonLd from "@/components/seo/LocalBusinessJsonLd";
 
 export const metadata: Metadata = {
   title: "Ostéopathie",
@@ -57,6 +58,7 @@ const specialties = [
 export default function OsteopathiePage() {
   return (
     <>
+      <LocalBusinessJsonLd />
       <OsteopathyHero />
 
       {/* Services */}

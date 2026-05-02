@@ -5,6 +5,17 @@ import Link from "next/link";
 
 const COOKIE_KEY = "cookie-consent";
 
+export type ConsentStatus = "accepted" | "rejected" | null;
+
+/** Read the current cookie consent status from localStorage. */
+export function getCookieConsent(): ConsentStatus {
+  if (typeof window === "undefined") return null;
+  const value = localStorage.getItem(COOKIE_KEY);
+  if (value === "accepted") return "accepted";
+  if (value === "rejected") return "rejected";
+  return null;
+}
+
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
 

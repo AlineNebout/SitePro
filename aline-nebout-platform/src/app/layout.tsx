@@ -3,6 +3,7 @@ import { Varela_Round, Nunito_Sans } from "next/font/google";
 import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 import CookieConsent from "@/components/layout/CookieConsent";
+import Analytics from "@/components/layout/Analytics";
 import "./globals.css";
 
 const varelaRound = Varela_Round({
@@ -31,6 +32,10 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     siteName: "Aline Nebout — Ostéopathe D.O.",
   },
+  twitter: {
+    card: "summary_large_image",
+    site: "@alinenebout",
+  },
 };
 
 export default function RootLayout({
@@ -48,6 +53,7 @@ export default function RootLayout({
         <main className="flex-1 pt-20">{children}</main>
         <Footer />
         <CookieConsent />
+        <Analytics />
       </body>
     </html>
   );
