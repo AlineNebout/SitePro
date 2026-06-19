@@ -10,12 +10,12 @@ const universeLinks = [
   { href: "/osteopathie", label: "Ostéopathie", universe: "osteopathie" as Universe },
   { href: "/reflexes", label: "Réflexes Archaïques", universe: "reflexes" as Universe },
   { href: "/coaching", label: "Coaching Foulée", universe: "coaching" as Universe },
-  { href: "/pole-sante", label: "Pôle Santé", universe: "pole-sante" as Universe },
+  //{ href: "/pole-sante", label: "Pôle Santé", universe: "pole-sante" as Universe },
 ];
 
 const sharedLinks = [
   { href: "/blog", label: "Blog" },
-  { href: "/pole-sante/communaute", label: "Communauté" },
+  //{ href: "/pole-sante/communaute", label: "Communauté" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -79,11 +79,10 @@ export default function Navigation() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`px-3 py-1.5 rounded-lg transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none ${
-                  currentUniverse === link.universe
-                    ? "text-primary bg-primary/10"
-                    : "hover:text-primary"
-                }`}
+                className={`px-3 py-1.5 rounded-lg transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none ${currentUniverse === link.universe
+                  ? "text-primary bg-primary/10"
+                  : "hover:text-primary"
+                  }`}
               >
                 {link.label}
               </Link>
@@ -142,9 +141,8 @@ export default function Navigation() {
             <Link
               key={link.href}
               href={link.href}
-              className={`hover:text-primary transition-colors duration-200 cursor-pointer ${
-                currentUniverse === link.universe ? "text-primary" : ""
-              }`}
+              className={`hover:text-primary transition-colors duration-200 cursor-pointer ${currentUniverse === link.universe ? "text-primary" : ""
+                }`}
             >
               {link.label}
             </Link>
